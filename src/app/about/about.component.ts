@@ -11,7 +11,8 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	//hdhdhdhdhdhiiii
+
+  	//hdhdhdhdhdiiiiii
   }
 
 }
