@@ -1,0 +1,48 @@
+<div class="container-fluid">
+<h6 mat-dialog-title >Want to see this place ?<hr></h6>
+  <mat-dialog-content>
+    <p>Please select a date and time that suits you and the landlord will respond</p> 
+    <mat-form-field>
+      <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+      <input matInput [matDatepicker]="picker" (dateChange)="onChange($event)"  (focus)="picker.open()" name="idate" placeholder="Choose a date">
+        <mat-datepicker #picker touchUi="true"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Select a time" [(ngModel)]="booking.time">
+        <mat-option value="09:00 (Morning)">
+          09:00 (Morning)
+        </mat-option>
+        <mat-option  value="10:00 (Morning)">
+          10:00 (Morning)
+        </mat-option>
+        <mat-option  value="11:00 (Morning)">
+          11:00 (Morning)
+        </mat-option>
+        <mat-option  value="12:00 (Mid-day)">
+          12:00 (Mid-day)
+        </mat-option>
+        <mat-option  value="13:00 (afternoon)">
+          13:00 (afternoon)
+        </mat-option>
+        <mat-option  value="14:00 (afternoon)">
+          14:00 (afternoon)
+        </mat-option>
+        <mat-option  value="15:00 (afternoon)">
+          15:00 (afternoon)
+        </mat-option>
+        <mat-option  value="16:00 (afternoon)">
+          16:00 (afternoon)
+        </mat-option>
+        <mat-option value="17:00 (afternoon)">
+          17:00 (afternoon)
+        </mat-option>
+        <mat-option  value="after-hours">
+          after-hours
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <a mat-fab color="primary" (click)="placeBooking(); close()" >submit</a>
+    <a mat-fab color="accent" (click)="close()">close</a>
+  </mat-dialog-content>
+</div>
+  

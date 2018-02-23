@@ -1,0 +1,38 @@
+<div fxLayout="column">
+	<app-header class="fxd_hdr"></app-header>
+	<div class="fixed_tab" style="margin-bottom: 5px">
+		<nav mat-tab-nav-bar fxShow.gt-xs="true" fxShow.lt-sm="false">
+			<a mat-tab-link  (click)="accom()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">hotel</i></span>
+				Accommodation
+			</a>
+			<a mat-tab-link (click)="chats()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">record_voice_over</i></span>
+				My enquiries 
+			</a>
+			<a mat-tab-link (click)="chats()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">chat_bubble_outline</i></span>
+				Chats 
+			</a>
+			<a mat-tab-link (click)="gotoUser(cuser?.uid)">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">face</i></span>
+				My profile 
+			</a>
+			<a mat-tab-link (click)="supportUser()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">people_outline</i></span>
+				Clickinn support 
+			</a>
+			<a mat-tab-link (click)="chats()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">insert_emoticon</i></span>
+				My status 
+			</a>
+			<a mat-tab-link (click)="chats()">
+				<span style="padding-top: 8px ; padding-right: 5px"><i class="material-icons">notifications_none</i></span>
+				Alerts 
+			</a>
+		</nav>
+	</div>
+	<div class="main_disp" style="margin-bottom: 50px">
+		<router-outlet ></router-outlet>
+	</div>
+</div>

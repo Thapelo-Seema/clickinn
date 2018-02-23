@@ -1,0 +1,80 @@
+<!--<form #filterForm='ngForm' (ngSubmit)="onSearch()" *ngIf="!submitted"> 
+       <md-card>
+			<h4 class="subheading"> Search for accommodation </h4>
+           <md-card-content>
+				<p class="info-txt"> Please select the filters that represent exactly the place you are looking for </p>
+				
+                <div class="input-group full_width input-sm" >
+                <span class="input-group-addon" id="locationl"><i class="material-icons">&#xE567;</i></span>
+                    <input type='text' id="locs" [(ngModel)]="search_obj.location" placeholder="location eg. Melville..." class="form-control prob_sects"  name="loc"/>
+                 </div>
+            
+            <div class="input-group full_width input-sm">
+                <span class="input-group-addon" id="nearbyl"><i class="material-icons">&#xE536;</i></span>
+               <input type='text' id="nby" [(ngModel)]="search_obj.nearby" placeholder="10 min walk to? eg. UJ Apk" class="form-control prob_sects" name="nearby"/>
+            </div>
+            <div class="input-group full_width input-sm">
+                <span class="input-group-addon" id="minl">min</span>
+                <span class="input-group-addon" id="minl1">R</span>
+                <input type="text" id="min" [(ngModel)]='search_obj.minPrice' name="minPrice" 
+                class="form-control prob_sects" placeholder="Price starting from"/>
+                <span class="input-group-addon" id="minl2">.00</span>
+            </div>
+            <div class="input-group full_width input-sm">
+                <span class="input-group-addon" id="maxl">max</span>
+                <span class="input-group-addon" id="maxl1">R</span>
+                <input type="text" id="max" [(ngModel)]='search_obj.maxPrice' name="maxPrice" 
+                class="form-control prob_sects" placeholder="Maximum price" required #max="ngModel"/>
+                <span class="input-group-addon" id="maxl2">.00</span> <br>
+                    <div [hidden]="max.valid || (max.pristine && max.untouched)" 
+                        class="alert alert-danger">
+                            Maximum price is required
+                    </div>
+            </div>
+            
+            <md-select placeholder="apartment/room type" class="full_width" >
+                <md-option *ngFor="let room of apartment_types" [value]="room" [(ngModel)]="search_obj.apt" name="apt" ngDefaultControl>
+                    {{ room }}
+                </md-option>
+            </md-select> 
+                <br><br>
+                <md-checkbox [(ngModel)]="search_obj.nsfas" name="nsfas">NSFAS student?</md-checkbox> <br><br>
+         
+            <button type="submit" md-raised-button color="primary" class="butts">Search</button>
+           </md-card-content>
+       </md-card>
+</form><br>
+<div *ngIf="submitted">
+    <div class="alert alert-info"> 
+        Enjoy browsing through the aptmts, clickinn has further alerted landlords around 
+        <strong> {{search_obj.location}}</strong>, 
+        some of them will respond to you, please engage with discretion.
+    </div>
+       
+       <div class="alert alert-success">
+           <strong> Alert details: </strong> <br>
+           location: {{search_obj.location}} <br>
+           nearby: {{search_obj.nearby}} <br>
+           min Price: R{{search_obj.minPrice}} <br>
+           max Price: R{{search_obj.maxPrice}} <br>
+           apartment type: {{search_obj.apt}} <br>
+           nsfas accredited: {{search_obj.nsfas}} <br> <br>
+           <button class="btn btn-success" (click)="submitted=false"> ok </button>
+       </div>
+</div>
+
+<md-card class="col-md-6" *ngFor="let aptmt of searchResults">
+	<md-card-header>
+		<md-card-title style="text-align:center">
+      {{aptmt.house.location}}, {{aptmt.house.city}}
+    </md-card-title>
+		<md-card-subtitle style="text-align:center">
+      {{aptmt.room_type}}, R{{aptmt.price}}
+    </md-card-subtitle>
+	</md-card-header>
+	<img md-card-image src="aptmt.pictures[0].image_url">
+	<md-card-actions>
+		<share-buttons></share-buttons>
+  </md-card-actions>
+</md-card>
+-->

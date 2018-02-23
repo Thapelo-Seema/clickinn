@@ -1,0 +1,8 @@
+.foot{
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}

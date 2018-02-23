@@ -1,0 +1,88 @@
+<div class="top_margin">
+	<div style="border: 1px solid lightgray; margin: 20px">
+		<img src="{{user?.photoUrl}}" alt="Profile photo of clickinn user" width="100%" height="450px">
+	</div>
+	<button mat-raised-button color="primary" (click)="toggleEdit()" style="margin: 15px">
+        <i class="material-icons">edit</i> 
+		<span> edit details </span>
+    </button>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody *ngIf="!editMode">
+	      <tr>
+          <td style="border-top: 0px">
+          		Name
+            <p class="info-txt text-muted">{{user?.displayName}}</p>
+          </td>
+        </tr>
+      	<tr>
+          	<td style="border-top: 0px">
+          			Contact number
+              <p class="info-txt text-muted">{{user?.phoneNumber}}</p>
+          	</td>
+        </tr>
+      	<tr>
+        	<td style="border-top: 0px">
+        			Email
+          		<p class="info-txt text-muted">{{user?.email}}</p>
+        	</td>
+      	</tr>
+       	<tr>
+        	<td style="border-top: 0px">
+        			Is landlord/agent
+          		<p class="info-txt text-muted">{{user?.is_host}}</p>
+        	</td>
+      	</tr>
+      	<tr>
+        	<td style="border-top: 0px">
+        			Occupation
+          		<p class="info-txt text-muted">{{user?.occupation}}</p>
+        	</td>
+      	</tr>
+			</tbody>
+			<tbody *ngIf="editMode">
+				      <tr>
+                <td style="border-top: 0px">
+                  <div class="input-group full_width">
+                    <span class="input-group-addon" id="namel"><i class="material-icons">&#xE851;</i></span>
+                    <input type="text" name="uname" [(ngModel)]="user.displayName" class="form-control" placeholder="Your name">
+                  </div> 
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <div class="input-group full_width">
+                    <span class="input-group-addon" id="tell"><i class="material-icons">&#xE0B0;</i></span>
+                    <input type="tel" name="ufone" [(ngModel)]="user.phoneNumber" class="form-control" placeholder="Your contact number">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <div class="input-group full_width">
+                    <span class="input-group-addon" id="emaill"><i class="material-icons">&#xE0BE;</i></span>
+                      <input type="email" name="uemail" [(ngModel)]="user.email" class="form-control" placeholder="Your email address">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <div class="input-group full_width">
+                    <input type="email" name="occ" [(ngModel)]="user.occupation" class="form-control" placeholder="Your occupation">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <button mat-raised-button color="primary" (click)="saveProfile(); toggleEdit()" >
+                    save
+                  </button>
+                  <button mat-raised-button (click)="toggleEdit()">
+                      cancel
+                  </button>
+                </td>
+              </tr>
+			</tbody>
+		</table>
+	</div>
+</div>

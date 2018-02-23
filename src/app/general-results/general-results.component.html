@@ -1,0 +1,14 @@
+<mat-card class="col-md-6" *ngFor="let aptmt of homeResults">
+	<mat-card-header>
+		<mat-card-title style="text-align:center">
+      {{aptmt.house.location}}, {{aptmt.house.city}}
+    </mat-card-title>
+		<mat-card-subtitle style="text-align:center">
+      {{aptmt.room_type}}, R{{aptmt.price}}
+    </mat-card-subtitle>
+	</mat-card-header>
+	<img mat-card-image src="aptmt.pictures[0].image_url">
+	<mat-card-actions>
+		<share-buttons></share-buttons>
+  </mat-card-actions>
+</mat-card>

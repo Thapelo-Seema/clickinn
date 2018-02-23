@@ -1,0 +1,200 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style=" margin-top: 100px" fxShow.gt-sm="true" fxShow.lt-md="false">
+        <div style="padding: 20px;">
+            <button mat-raised-button color="accent" (click)="goBack()" fxShow.gt-sm="true" fxShow.lt-md="false">
+                <i class="material-icons">arrow_back</i>
+                <span> go back </span>
+            </button>
+        </div>
+        <div style="padding: 20px;">
+            <button mat-raised-button color="primary" (click)="gotoProperties()" >
+                <span>My properties &nbsp;</span>
+                <i class="material-icons">list</i>
+            </button>
+        </div> 
+    </div>
+    <div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" 
+        fxFlexOrder="2" class="top_margin">
+        <mat-card fxFlex.gt-xs="60%">
+            <h3>Manage Properties<hr></h3>
+            <div fxLayout="row" style="margin-bottom: 10px">
+                <a mat-mini-fab color="primary" (click)="gotoProperties()" fxShow.lt-md="true" 
+                fxShow.gt-sm="false">
+                    <i class="material-icons">location_city</i>
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a mat-mini-fab color="primary" (click)="gotoBookings()" fxShow.lt-md="true" 
+                fxShow.gt-sm="false">
+                    <i class="material-icons">list</i>
+                </a>
+            </div>
+            <p class="info-txt text-muted">
+                <b>Manage</b> your properties by creating a <b>property profile</b> for each one of your buildings
+                <b>(house or flat block)</b> >>> you can then <b>add apartments/rooms</b> to the specific property profiles >>> then you can 
+                <b>edit</b> the details of these properties and apartments later on.
+            </p>
+            <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+             z-index: 100">
+                <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+            </div>
+            <button mat-raised-button *ngIf="!showUploadForm" (click)="toggleForm()">
+                <span>Create a property profile</span>
+                <i class="material-icons">cloud_upload</i>
+            </button>
+            <button mat-raised-button *ngIf="showUploadForm" (click)="toggleForm()">
+                <span> close </span>
+                <i class="material-icons">close</i>
+            </button>
+            <div *ngIf="showUploadForm">
+            <section>
+                <!--Location -->
+                <h5 class="subheading">Upload a property</h5>
+                <p class="info-txt text-muted">
+                    This section provides potential tenants with a sense of how well your property is located.
+                </p>
+                <mat-form-field class="input_fields"> 
+                    <span matPrefix><i class="material-icons">&#xE567;</i></span>
+                    <input  matInput type="text" placeholder="Street address"  [(ngModel)]="prop['street_address']" name="adrss" autocorrect="off" autocapitalize="off" spellcheck="off" [matAutocomplete]="autoAdd" [formControl]="adrControl">
+                    <mat-hint align="end"><h6>eg. 56 De Korte Street</h6></mat-hint>
+                    <mat-autocomplete #autoAdd="matAutocomplete">
+                      <mat-option *ngFor="let option of addresses" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>    
+                <mat-form-field class="input_fields"> 
+                    <span matPrefix><i class="material-icons">&#xE567;</i></span>
+                    <input  matInput type="text" placeholder="Location..." [(ngModel)]="prop['location']" name="loc" autocorrect="off" autocapitalize="off" spellcheck="off" [matAutocomplete]="autoLoc" [formControl]="searchControl">
+                    <mat-hint align="end"><h6>eg. Melville</h6></mat-hint>
+                    <mat-autocomplete #autoLoc="matAutocomplete">
+                      <mat-option *ngFor="let option of locations" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field class="input_fields">
+                    <span matPrefix><i class="material-icons">&#xE536;</i></span>  
+                    <input  matInput type="text" id="nearby" placeholder="landmarks within 10 min walk" 
+                    [matAutocomplete]="autoNby" [formControl]="placeCtrl" [(ngModel)]="nearby" name="nby" autocorrect="off" autocapitalize="off" spellcheck="off">
+                    <mat-hint align="end">
+                       <h6>eg Cresta Mall</h6>
+                    </mat-hint>
+                    <mat-autocomplete #autoNby="matAutocomplete">
+                      <mat-option *ngFor="let option of places" [value]="option" (click)="addNearby()" >
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+               </mat-form-field>
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let place of prop['near_to']" 
+                                [selectable]="selectable" 
+                                [removable]="removable" 
+                                (remove)="remove(place)">
+                               <small><b> {{place}} </b></small> &nbsp;
+                        <i class="material-icons" matChipRemove *ngIf="removable"> 
+                            cancel 
+                        </i>
+                    </mat-chip>
+                </mat-chip-list>
+                <br><br>
+                <hr>
+            </section>
+            <!--Amenities-->
+            <section>
+                <h5 class="subheading"> Amenities </h5>
+                <p class="info-txt text-muted"> 
+                    Check each amenity that your property provides. 
+                </p>   
+                <div class="row">
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['nsfas']" name="nnsfas" uncheckable>
+                            NSFAS accredited
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['prepaid_elec']" name="nelec"uncheckable>
+                            Prepaid electricity
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['wifi']" name="nwifi" uncheckable>
+                            Free wifi provided
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['laundry']" name="laund" uncheckable>
+                            Laundry facilities
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['parking']" name="npark" uncheckable>
+                            Secured Parking
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="input-group full_width" >
+                  <textarea rows="6" class="form-control" style="z-index:0" placeholder="List extra features and offerings of your property"  [(ngModel)]="prop['common']" name="nextra">
+                  </textarea>
+                </div>
+                <hr>
+            </section>
+            <!--images-->
+            <section>
+                <h5 class="subheading">Images</h5>
+                <p class="info-txt text-muted">
+                    Please add quality pictures that are a true reflection of your property.
+                </p>
+                <form>
+                    <h4>Display picture</h4>
+                    <p class="info-txt text-muted">Add a display image for your property</p>
+                    <div class="input-group full_width">
+                        <span class="input-group-addon" id="dp"><i class="material-icons">photo</i></span>
+                        <input id="images" type="file" class="form-control" (change)="dpChange($event)" accept="image/*">
+                    </div>
+                    <hr>
+                    <h4>Common area pictures</h4>
+                    <p class="info-txt text-muted">
+                        Add pictures of the common areas (kitchen, pool, laundry..etc) of your property
+                    </p>
+                    <div class="input-group full_width">
+                        <span class="input-group-addon" id="ima"><i class="material-icons">photo</i></span>
+                        <input id="images" type="file" class="form-control" (change)="fileChange($event)" accept="image/*" multiple>
+                    </div>
+                </form>
+            </section>
+            <hr width="90%">
+            <div style="text-align: right; padding-top: 30px">
+                <button mat-raised-button color="primary" (click)="upload()">
+                    <span> Upload property</span>
+                    <i class="material-icons">cloud_upload</i>
+                </button>
+            </div>
+        </div>
+        </mat-card>         
+        <mat-card  fxFlex.gt-xs="40%" fxShow.lt.md="false">
+            <h5 class="subheading">My current properties<hr></h5>
+            <masonry [useImagesLoaded]="true" >
+                <masonry-brick *ngFor="let property of properties" class="image_container"> 
+                    <div style="position: relative; top:0; left: 0; width:100%; height: 100%;">
+                        <img src="{{property?.dP?.url}}" width="100%" height="100%">
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0, 0.1); color: whitesmoke; z-index: 1; width: 100%; height: 100%" (click)="gotoProperty(property?.prop_id)">
+                        <a mat-icon-button style="position: absolute; top: 0; left: 0" (click)="gotoPropertyApartments(property?.prop_id)" >
+                            <i class="material-icons">hotel</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; top: 0; right: 0" (click)="addApartment(property?.prop_id)" >
+                            <i class="material-icons">add_circle</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; bottom: 10px; left: 0" (click)="gotoProperty(property?.prop_id)" >
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <div style="position: absolute; bottom: 0; left: 50%;">
+                           <p> {{property?.street_address|TakeJustName:",":0}}, {{property?.location|TakeJustName:",":0}} </p>
+                        </div>
+                    </div> 
+                </masonry-brick>
+            </masonry>
+        </mat-card>
+    </div>
+    <div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">
+    </div>
+</div>

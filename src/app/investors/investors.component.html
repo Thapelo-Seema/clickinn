@@ -1,0 +1,39 @@
+<div fxLayout="column">
+	<app-header class="fxd_hdr"></app-header>
+	<div style="text-align: center;">
+		<h1 style="margin-top: 15px"> Investors and potential partners<hr width="60%"></h1>
+		<mat-card style="width: 90%; margin-left: auto; margin-right: auto;">
+			<h2> Foreword <hr width="60%"> </h2>
+			<p>
+				The Clickinn team is open to investment and partnership talks. We encourage prospectors to fill out the form below and describe their proposal as best as possible. Our turn-around/response time is super quick, especially if the deal is interesting and seems legit.
+			</p>
+			<br><br>
+			<h2> Enquiry form:</h2>
+			<div style="width: 50%; margin-left: auto; margin-right: auto">
+			<input type="text" name="ename" [(ngModel)]="enquiry.person_name" placeholder="Name" class="form-control" required> <br>
+			<input type="text" name="ecompany" [(ngModel)]="enquiry.company_name" placeholder="Company or Organisation name" class="form-control" required><br>
+			<input type="text" name="econtact" [(ngModel)]="enquiry.contact_number" placeholder="Contact number..." class="form-control" required><br>
+			<input type="text" name="eemail" [(ngModel)]="enquiry.email" placeholder="Email address" class="form-control" required><br>
+			<mat-form-field class="input_fields" > 
+                <mat-select placeholder="Query type"  name="qtype" [(ngModel)]="enquiry.type"  required>
+                    <mat-option *ngFor="let q of enquiry_type" [value]="q">
+                        {{q}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> <br>
+            Enquiry details(please decribe your proposal in brief detail):
+            <textarea rows="10" class="form-control" [(ngModel)]="enquiry.description" >
+            	Please describe your proposal here, include the offer details, appointment time, date and place
+            </textarea>  <br>
+            <button mat-raised-button color="primary" (click)="submitEnquiry()">Submit</button>
+			</div>
+			<br><br>
+			<h2> Contact Us <hr width="60%"> </h2>
+			<p>
+			   Contact us on the following number for any enquiries:<a href="tel:+27823114484"> 0823114484</a>
+			</p>
+
+			
+		</mat-card>
+	</div>
+</div>

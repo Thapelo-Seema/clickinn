@@ -1,0 +1,134 @@
+<!--Large screen view -->
+<div class="top_margin container" fxLayout="column" fxShow.xs="false" fxShow.gt-xs="true">
+  <div fxLayout="row">
+    <div #scroller fxFlex.gt-xs="100%" fxLayout="column" style="position: fixed; top: 150px; right: 0; bottom: 60px; overflow-y: scroll; width: 100%">
+      <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          <mat-progress-spinner mode="indeterminate" style="z-index: 100"></mat-progress-spinner>
+      </div>
+      <div *ngFor="let msg of chatList | async" class="messageContainer" style="margin-left: 15px">
+        <!--View for when not own message -->
+        <div class="messageData" *ngIf="!isOwnMsg(msg?.by?.id)">
+          <span class="sender">{{getUserNameById(msg?.by?.id)?.displayName|TakeJustName:" ":0}}</span>
+          <span class="timeStamp">
+            {{msg?.timeStamp | date:'medium'}}<br>
+            {{msg?.topic}}
+          </span>
+        </div>
+        <!--View for when own message -->
+        <div class="messageData" *ngIf="isOwnMsg(msg?.by?.id)" style="background: #000190">
+          <span class="sender isOwnSender">Me</span>
+          <span class="timeStamp isOwnTimeStamp">
+            {{msg?.timeStamp | date:'medium'}}
+          </span>
+        </div>
+        <div class="messageContent isOwnMessage">
+          {{msg?.message}}
+          <span>
+            <i class="material-icons" *ngIf="msg?.delivered == false">done</i>
+            <i class="material-icons" *ngIf="msg?.delivered == true">done_all</i>
+            <i class="material-icons" *ngIf="msg?.read == true" style="color: blue">done_all</i>
+            <i class="material-icons" *ngIf="msg?.delivered == undefined || msg?.delivered == null ">error</i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="position: fixed; bottom: 0; right: 0; width: 100%; z-index: 1000" 
+      fxLayout="row" class="input-group">
+      <textarea  fxFlex="100%" [(ngModel)]="message" placeholder="Type message here..." (keydown)="handleSubmit($event)" 
+      name="textmsg"></textarea>
+      <span class="input-group-addon" id="send">
+        <button mat-icon-button (click)="send()"><i class="material-icons">send</i></button>
+      </span> 
+    </div>
+  </div>
+</div> 
+<!--Mobile View -->
+<div class="top_margin" fxLayout="column" style="width: 100%; " fxShow.xs="true" fxShow.gt-xs="false">
+    <div #scroller fxFlex.xs="100%" fxLayout="column" style="margin-bottom: 50px">
+      <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          <mat-progress-spinner mode="indeterminate" style="z-index: 100"></mat-progress-spinner>
+      </div>
+      <div *ngFor="let msg of chatList | async" class="messageContainer" style="width: 100%" fxFlex.xs="100%">
+        <div class="messageData" *ngIf="!isOwnMsg(msg?.by?.id)">
+          <span class="sender">{{getUserNameById(msg?.by?.id)?.displayName|TakeJustName:" ":0}}</span>
+          <span class="timeStamp">
+            {{msg?.timeStamp | date:'medium'}}<br>
+            {{msg?.topic}}
+          </span>
+        </div>
+        <div class="messageData" *ngIf="isOwnMsg(msg?.by?.id)" style="background: #000050">
+          <span class="sender isOwnSender">Me</span>
+          <span class="timeStamp isOwnTimeStamp">
+            {{msg?.timeStamp | date:'medium'}}
+          </span>
+        </div>
+        <div class="messageContent isOwnMessage">
+          {{msg?.message}}
+          <span>
+            <i class="material-icons" *ngIf="msg?.delivered == false">done</i>
+            <i class="material-icons" *ngIf="msg?.delivered == true">done_all</i>
+            <i class="material-icons" *ngIf="msg?.read == true" style="color: blue">done_all</i>
+            <i class="material-icons" *ngIf="msg?.delivered == undefined || msg?.delivered == null ">error</i>
+          </span>
+        </div>
+      </div>
+      <div style="position: fixed; bottom: 0; padding: 2px; padding-bottom: 2px; width: 100%; background: white; z-index: 200000" fxLayout="row" class="input-group">
+        <textarea  fxFlex="100%" [(ngModel)]="message" placeholder="Type message here..." (keydown)="handleSubmit($event)" 
+        name="textmsg"></textarea>
+        <span class="input-group-addon" id="send">
+          <button mat-icon-button (click)="send()"><i class="material-icons">send</i></button>
+        </span> 
+      </div>
+    </div>
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

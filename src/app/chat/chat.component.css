@@ -1,0 +1,137 @@
+.mainContent{
+    display: flex;
+}
+
+.contactItem{
+    background: transparent; 
+    color: whitesmoke; 
+    text-align: center;
+}
+
+.contactItem a :hover{
+    text-decoration: none;
+    color: white;
+}
+
+.userListWrapper{
+    display: flex;
+    flex: 1;
+    order: 1;
+    background-color: #2A2845;
+    color: #fff;
+    padding: 0px;
+    border-right: 1px solid #222;
+}
+
+.feedWrapper{
+    flex: 5;
+    order: 2;
+    overflow-y: scroll;
+    background-color: #fff;
+    padding: 20px 0px 0px 24px;
+}
+
+.chatFormWrapper{
+    display: flex;
+    z-index: 3;
+    background-color: #eee;
+    height: 50px;
+}
+
+#scroll-style::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+.chatInput{
+    flex:10;
+    transition: 0.1s ease-out;
+    background-color: #eee;
+    color: #000;
+    padding-left: 80px;
+}
+
+.message{
+    display: block;
+    height: auto;
+}
+
+.chatInput:focus{
+    
+    transition: 0.2s ease-in;
+    background-color: #e4f1fe;
+    color: #222;   
+}
+
+.chatButt{
+    width: 100%;
+    background: transparent;
+    color: white;
+}
+
+.chatButton{
+    flex: 1;
+    transition: 0.2s ease-out;
+    padding: 10px;
+    padding: 8px 24px;
+    color: white;
+    background-color: #2a2845;
+}
+
+.chatButton:hover{
+    background-color: #444;
+}
+
+.messageContainer{
+    margin-bottom: 10px;
+    display: block;
+    height: auto;
+    width: 80%;
+    border-radius: 5px;
+    align-items: stretch;
+    background-color: #eee;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.isOwnMessage{
+    background-color: #01579B;
+}
+
+.messageData{
+    flex: 1;
+    padding: 10px;
+    font-size: 0.7em;
+}
+
+.sender{
+    display: block;
+    color:#222;
+    font-weight: bold;
+}
+
+.isOwnSender{
+   color: #E1F5FE; 
+}
+
+.timeStamp{
+    color: #555;
+    font-style: italic;
+}
+
+.isOwnTimeStamp{
+    color:#4FC3F7;
+}
+
+.messageContent{
+    height: auto;
+    flex:9;
+    background-color: #fff;
+    padding: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.isOwnMesageContent{
+    background-color: #E3F2FD;
+    color: #01579B;
+}

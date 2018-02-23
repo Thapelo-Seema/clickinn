@@ -1,0 +1,66 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style=" margin-top: 50px" fxShow.gt-sm="true" fxShow.lt-md="false">
+        <div style="padding: 20px">
+            <button mat-raised-button color="accent" (click)="goBack()" >
+                <i class="material-icons">arrow_back</i>
+                <span> go back</span>
+            </button>
+        </div>
+    </div>
+    <mat-card fxFlex="60%" fxFlex.lt-md="100%" fxLayout="column" 
+    fxFlexOrder="2" class="top_margin">
+            <h3 >My properties<hr width="80%"></h3>
+            <p class="info-txt text-muted">
+                These are your current properties, you can edit the property details, add or remove apartments from a property etc.
+            </p>
+            <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+             z-index: 100">
+                <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+            </div>
+            <masonry [useImagesLoaded]="true" fxLayout="row" fxShow.gt-xs="true" fxShow.xs="false">
+                <masonry-brick *ngFor="let property of properties " fxFlex.gt-xs="48%" style="width: 100%; max-height: 300px; margin: 5px;"> 
+                    
+                        <img src="{{property?.dP.url}}" width="100%" height="100%">
+                    
+                    <div style="position: absolute; width: 100%; height: 100%; top: 0; right: 0; bottom: 0; left: 0;
+                    background: rgba(0,0,0, 0.3); color: whitesmoke; z-index: 1" (click)="gotoProperty(property?.prop_id)">
+                        <a mat-icon-button style="position: absolute; top: 0; left: 0" (click)="gotoPropertyApartments(property?.prop_id)" >
+                            <i class="material-icons">hotel</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; top: 0; right: 0" (click)="addApartment(property?.prop_id)" >
+                            <i class="material-icons">add_circle</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; bottom: 10px; left: 0" (click)="gotoProperty(property?.prop_id)" >
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <div style="position: absolute; bottom: 0; left: 50%;">
+                           <p > {{property?.street_address|TakeJustName:",":0}}, {{property?.location|TakeJustName:",":0}} </p>
+                        </div>
+                    </div> 
+                </masonry-brick>
+            </masonry>
+            <masonry [useImagesLoaded]="true" fxLayout="column" fxShow.gt-xs="false" fxShow.xs="true">
+                <masonry-brick *ngFor="let property of properties" class="image_container"> 
+                    <div style="position: relative; top:0; left: 0; width:100%; height: 100%; ">
+                        <img src="{{property?.dP.url}}" width="100%" height="100%">
+                    </div>
+                    <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0, 0.3); color: whitesmoke; z-index: 1; width: 100%; height: 100%" (click)="gotoProperty(property?.prop_id)">
+                        <a mat-icon-button style="position: absolute; top: 0; left: 0" (click)="gotoPropertyApartments(property?.prop_id)" >
+                            <i class="material-icons">hotel</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; top: 0; right: 0" (click)="addApartment(property?.prop_id)" >
+                            <i class="material-icons">add_circle</i>
+                        </a>
+                        <a mat-icon-button style="position: absolute; bottom: 10px; left: 0" (click)="gotoProperty(property?.prop_id)" >
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <div style="position: absolute; bottom: 0; left: 50%;">
+                           <p > {{property?.street_address|TakeJustName:",":0}}, {{property?.location|TakeJustName:",":0}} </p>
+                        </div>
+                    </div> 
+                </masonry-brick>
+            </masonry>
+        </mat-card>   
+    <div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="container-fluid" style="text-align: center">
+  <h5 mat-dialog-title>{{data.title}}<hr></h5>
+  <mat-dialog-content>
+    <p class="alert alert-info"> 
+      <i>{{data.name|TakeJustName:" ":0}}</i> {{data.message}}
+    </p> 
+  </mat-dialog-content>
+  <mat-dialog-actions style="padding:20px">
+    <button mat-raised-button color="primary" (click)="close()">ok</button>
+  </mat-dialog-actions>
+</div>

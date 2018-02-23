@@ -1,0 +1,209 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style="margin-top: 50px" fxShow.gt-sm="true" fxShow.lt-md="false">
+  		<div fxShow.lt-lg="true" fxShow.gt-md="false">
+            <div style="padding: 20px">
+                <button mat-mini-fab color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-raised-button color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <i class="material-icons">list</i>
+                    <span>apartments</span>
+                </button>
+            </div>
+        </div>
+        <div fxShow.lt-lg="false" fxShow.gt-md="true">
+            <div style="padding: 20px">
+                <button mat-raised-button color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                    go back 
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-raised-button color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <span>View apartments &nbsp;</span>
+                    <i class="material-icons">list</i>
+                </button>
+            </div>
+        </div>
+  	</div>
+  	<div div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" fxFlexOrder="2" class="top_margin">
+  		<mat-card fxFlex.gt-xs="70%">
+  			<h3>Edit {{prop?.street_address}}</h3>
+  			<p class="info-txt">
+  				You may edit the details of your property, add apartments or delete the property from your clickinn property folder
+  			</p>
+            <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; 
+                transform: translate(-50%, -50%);">
+                <mat-progress-spinner mode="indeterminate" style="z-index: 100"></mat-progress-spinner>
+            </div>
+            <mat-form-field class="input_fields">
+                <span matPrefix><i class="material-icons">&#xE536;</i></span>  
+                <input  matInput type="text" id="nearby" placeholder="Nearby landmarks/establishments" 
+                [matAutocomplete]="autonby" [formControl]="placeCtrl" [(ngModel)]="nearby" name="nby"
+                autocorrect="off" autocapitalize="off" spellcheck="off">
+                <mat-hint align="end">
+                   <h6>must be within 10 min walk</h6>
+                </mat-hint>
+           </mat-form-field>
+           <mat-autocomplete #autonby="matAutocomplete">
+                <mat-option  (click)="addNearby()" *ngFor="let nrby of filteredPlaces" [value]="nrby">
+                    {{nrby}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let place of prop['near_to']" 
+                            [selectable]="selectable" 
+                            [removable]="removable" 
+                            (remove)="remove(place)">
+                           <small><b> {{place|TakeJustName:",":0}} </b></small> &nbsp;
+                    <i class="material-icons" matChipRemove *ngIf="removable"> 
+                        cancel 
+                    </i>
+                </mat-chip>
+            </mat-chip-list>
+            <br><br>
+            <hr>      
+            <!--Amenities-->
+            <section>
+                <h5 class="subheading"> Amenities </h5>
+                <p class="info-txt text-muted"> 
+                    Check each amenity that your property provides. 
+                </p>   
+                <div class="row">
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['nsfas']" name="nnsfas" uncheckable>
+                            NSFAS accredited
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['prepaid_elec']" name="nelec"uncheckable>
+                            Prepaid electricity
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['wifi']" name="nwifi" uncheckable>
+                            Free wifi provided
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['laundry']" name="laund" uncheckable>
+                            Laundry facilities
+                        </mat-checkbox>
+                    </div>
+                    <div class="col-md-6" style="text-align: left">
+                        <mat-checkbox color="primary" value="after" [(ngModel)]="prop['parking']" name="npark" uncheckable>
+                            Secured Parking
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="input-group full_width" >
+                    <textarea  class="form-control" [(ngModel)]="prop['common']" name="nextra"
+                         style="z-index:0; background:whitesmoke; border: 1px solid blue" placeholder="List extra features and offerings of your property">
+                    </textarea>
+                </div>
+                <hr>
+            </section>
+            <!--images-->
+            <mat-card class="full-width cards">
+                <h5 class="subheading"> Images<hr style="color:blue"> </h5>
+                <p class="info-txt text-muted"> Upload images of the apartment/room. Make certain that the images are an honest and high quality description of the apartment </p>
+                <mat-card-content>
+                    <masonry [useImagesLoaded]="true">
+                        <masonry-brick *ngFor="let image of images" class="image_container">
+                          <div style="position: relative; top: 0; left:0; width: 100%; height: 100%"> 
+                            <img src="{{image.url}}" width="100%" height="100%">
+                          </div>
+                          <div style="position: absolute; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+                            <a mat-icon-button (click)="removeImage(image)" style="position: absolute;top: 0; right: 0; color: white"> 
+                              <i class="material-icons">close</i>
+                            </a>
+                          </div>
+                        </masonry-brick>
+                    </masonry>
+                    <form>
+                        <p style="margin-top: 20px">Add more pictures:</p>
+                        <div class="input-group full_width">
+                            <span class="input-group-addon" id="ima"><i class="material-icons">photo</i></span>
+                            <input id="images" type="file" class="form-control" (change)="fileChange($event)" accept="image/*" multiple>
+                        </div>
+                    </form>
+                 </mat-card-content><hr width="90%">
+                 <div style="text-align: right; padding-top: 30px">
+                    <button mat-raised-button color="primary" (click)="upload()">
+                        <span>Save Changes</span>
+                        <i class="material-icons">cloud_upload</i>
+                    </button>
+                </div>
+            </mat-card>
+  		</mat-card>
+      	<mat-card  fxFlex.gt-xs="30%">
+            <h5 class="subheading">Property details<hr></h5>
+            <div class="table-responsive" style="width: 100%">
+                <table class="table table-hover">
+                    <tbody >
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Location</h6>
+                                <p class="info-txt text-muted">{{prop?.location|TakeJustName:",":0}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Street Address</h6>
+                                <p class="info-txt text-muted">{{prop?.street_address|TakeJustName:",":0}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Common areas and features</h6>
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small>{{prop?.common}}</small>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px;">
+                                <h6>Places within 10 min walk</h6>
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small *ngFor="let place of prop?.near_to">
+                                        {{place|TakeJustName:",":0}}<br>
+                                    </small>
+                                </p>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>NSFAS accredited</h6>
+                                <p class="info-txt text-muted">{{prop?.nsfas}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has free wifi</h6>
+                                <p class="info-txt text-muted">{{prop?.wifi}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has secure parking</h6>
+                                <p class="info-txt text-muted">{{prop?.parking}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has laundry facilities</h6>
+                                <p class="info-txt text-muted">{{prop?.laundry}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-card>
+  	</div>
+  	<div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">
+  	</div>
+</div>
+

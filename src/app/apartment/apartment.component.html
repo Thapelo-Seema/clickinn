@@ -1,0 +1,162 @@
+
+  <div fxLayout="row" fxLayout.lt-sm="column" style="background: white">
+  	<div fxFlex="15%" fxFlexOrder="1"  fxShow.gt-sm="true" fxShow.lt-md="false">
+  		
+  	</div>
+  	<div div fxFlex="70%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" fxFlexOrder="2" class="top_margin top_pad">
+  		<div fxFlex.gt-xs="70%">
+  			<span> <a mat-mini-fab style="background-color: #1F618A" (click)="goBack()">
+            	<i class="material-icons">arrow_back</i>
+            </a></span> &nbsp;&nbsp;
+  			<span><font style="font-size: 35px; font-family: 'Ubuntu', sans-serif;">Apartment</font></span>
+  			<p class="info-txt">
+  				Book a viewing, send a chat message or see a virtual tour of this apartment by pressing the buttons below.
+  			</p>
+  			<div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100">
+                <div class="loader">
+      			</div>
+            </div>
+  			<div style="text-align: center; margin-bottom: 5px" fxShow.gt-md="true" fxShow.lt-lg="false">
+                <a mat-button style="color: #1F618A" (click)="booking()">
+                    <span>book a viewing</span>
+                    <i class="material-icons">transfer_within_a_station</i>
+                </a> &nbsp;&nbsp;
+                <a mat-button style="color: #1F618A" (click)="chat()">
+                    <span>chat with landlord</span>
+                    <i class="material-icons">chat</i>
+                </a> &nbsp;&nbsp;
+                <a mat-button style="color: #1F618A" >
+                    <span>virtual tour</span>
+                    <i class="material-icons">view_stream</i>
+                </a>
+            </div>
+            <div style="text-align: center; margin-bottom: 5px" fxShow.gt-md="false" fxShow.lt-sm="false" fxShow.sm="true"
+            fxShow.md="true">
+                <a mat-mini-fab style="background-color: #1F618A; color: white" (click)="booking()">
+                   <i class="material-icons">transfer_within_a_station</i>
+                </a>&nbsp;&nbsp;
+                <a mat-mini-fab style="background-color: #1F618A; color: white" (click)="chat()">
+                   <i class="material-icons">chat</i>
+                </a>&nbsp;&nbsp;
+                <a mat-mini-fab style="background-color: #1F618A; color: white">
+                   <i class="material-icons">view_stream</i>
+                </a>
+            </div>
+            <div style="text-align: center; margin-bottom: 5px" fxShow.gt-xs="false" fxShow.lt-sm="true">
+                <a mat-mini-fab style="background-color: #1F618A; color: white" (click)="booking()">
+                   <i class="material-icons">transfer_within_a_station</i>
+                </a>&nbsp;&nbsp;
+                <a mat-mini-fab style="background-color: #1F618A; color: white"  (click)="chat()">
+                   <i class="material-icons">chat</i>
+                </a>&nbsp;&nbsp;
+                <a mat-mini-fab style="background-color: #1F618A; color: white">
+                   <i class="material-icons">view_stream</i>
+                </a>
+            </div>
+  			<ngb-carousel style="padding: 10px">
+  				<ng-container *ngFor="let image of images">
+	  				<ng-template ngbSlide [id]="image?.name">
+	  					<img src="{{image?.url}}" alt="Images of {{apartment?.property.street_address}}, {{apartment?.property.location}}" style="width: 100%; max-height: 230px" fxShow.xs="true" fxShow.gt-xs="false">
+	  					<img src="{{image?.url}}" alt="Images of {{apartment?.property.street_address}}, {{apartment?.property.location}}" style="width: 100%; max-height: 350px" fxShow.sm="true" fxShow.gt-sm="false" fxShow.lt-sm="false">
+	  					<img src="{{image?.url}}" alt="Images of {{apartment?.property.street_address}}, {{apartment?.property.location}}" style="width: 100%; max-height: 500px" fxShow.gt-sm="true" fxShow.lt-sm="false">
+	  					<div class="carousel-caption" fxShow.gt-sm="true" fxShow.lt-md="false">
+	  						<h2>{{apartment?.room_type}}, R{{apartment?.price}}.00</h2>
+	  						<h5>{{apartment?.property.location|TakeJustName:",":0}}</h5>
+	  					</div>
+	  					<div class="carousel-caption" fxShow.lt-md="true" fxShow.gt-sm="false">
+	  						<h4>{{apartment?.room_type}}, R{{apartment?.price}}.00</h4>
+	  						<h5>{{apartment?.property.location|TakeJustName:",":0}}</h5>
+	  					</div>
+	  				</ng-template>
+  				</ng-container>
+  			</ngb-carousel>
+  		</div>
+  		<div  fxFlex.gt-xs="30%">
+            <font style="font-size: 25px; font-family: 'Ubuntu', sans-serif;">Apartment details<hr></font>
+            <div class="table-responsive">
+	          	<table class="table table-hover">
+	            	<tbody >
+		            	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Location</h6>
+		                  		<p class="info-txt">{{apartment?.property?.location|TakeJustName:",":0}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Apartment type</h6>
+		                  		<p class="info-txt">{{apartment?.room_type}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Rent</h6>
+		                  		<p class="info-txt">R{{apartment?.price}}.00</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Deposit</h6>
+		                  		<p class="info-txt">R{{apartment?.deposit}}.00</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Apartment description</h6>
+		                  		<p class="info-txt">{{apartment?.description}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Common areas and features</h6>
+		                  		<p style="background-color: #1F618A; color: white; text-align: left; padding: 5px">
+                                    <small>{{apartment?.property?.common}}</small>
+                                </p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Places within 10 min walk</h6>
+					            <p style="background-color: #1F618A; color: white; text-align: left; padding: 5px">
+                                    <small *ngFor="let place of apartment?.property?.near_to">
+                                        {{place|TakeJustName:",":0}}<br>
+                                    </small>
+                                </p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>NSFAS accredited</h6>
+		                  		<p class="info-txt ">{{apartment?.property?.nsfas}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Has free wifi</h6>
+		                  		<p class="info-txt ">{{apartment?.property?.wifi}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Has secure parking</h6>
+		                  		<p class="info-txt ">{{apartment?.property?.parking}}</p>
+		                	</td>
+		             	</tr>
+		             	<tr>
+		                	<td style="border-top: 0px">
+		                		<h6>Has laundry facilities</h6>
+		                  		<p class="info-txt">{{apartment?.property?.laundry}}</p>
+		                	</td>
+		             	</tr>
+
+	          		</tbody>
+	      		</table>
+	  		</div>
+        </div>
+  	</div>
+  	<div fxFlex="15%" fxFlexOrder="3" fxShow.gt-sm="true" fxShow.lt-md="false">
+  	</div>
+  </div>
+
+
+            

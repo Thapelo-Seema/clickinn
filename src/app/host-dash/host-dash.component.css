@@ -1,0 +1,50 @@
+@media only screen and (min-width:768px){
+    .property_pane{
+    width: 50%;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin: 5px auto;
+    }
+
+    response_input{
+        display: inline-block;
+        width: 70%;
+    }
+	
+	nav a{
+	text-decoration: none;
+	}
+
+	nav a :hover{
+	text-decoration: none;
+	}
+
+	nav a :active {
+	text-decoration: none;
+	}
+}
+
+response_input{
+    width: 50%;
+}
+
+.header{
+background: #000020;
+}
+
+.spacer{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+
+
+.item_text{
+    padding-bottom:10px;
+    text-align: center; 
+}
+
+.menu{
+    background: transparent;
+}

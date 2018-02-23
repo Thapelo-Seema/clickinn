@@ -1,0 +1,128 @@
+<!--Large screen view -->
+<div class="top_margin container" fxLayout="column" fxShow.xs="false" fxShow.gt-xs="true">
+  <div fxLayout="row">
+    <div fxFlex.gt-xs="30%" class="top_alt" style="background: #000030; left: 0; bottom: 0; overflow-y: scroll; width: 30%">
+      <p style="margin-bottom: 10px; padding-top: 30px; color: white; text-align: center; font-size: 25px">
+        Clickinn Chat 
+      </p><hr color="white" width="70%">
+      <mat-list style="text-align: center">
+          <mat-list-item *ngFor="let contact of contacts">
+            <i *ngIf="contact?.status" class="material-icons" style="color: #58D68D; font-size: 10px">brightness_1</i>
+            <i *ngIf="!contact?.status" class="material-icons" style="color: lightgray; font-size: 10px">brightness_1</i>
+            <button (click)="getMessages(contact?.uid); updateCurrentContact(contact?.uid);" 
+            style="background: transparent; color: whitesmoke; text-align: center; word-wrap: break-word; border: 0px solid white; margin-right: auto; margin-left: auto"> 
+              {{contact?.displayName}} 
+            </button>
+          </mat-list-item> 
+      </mat-list>
+    </div> 
+    <div #scroller fxFlex.gt-xs="70%" fxLayout="column" class="top_alt" style="right: 0; bottom: 60px; overflow-y: scroll; width: 70%">
+      <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 65%; transform: translate(-50%, -50%); z-index: 1000">
+        <div class="loader">
+        </div>
+      </div>
+      <mat-card *ngIf="noContacts" style="margin-top: 5px">
+      <h3> No Chats available </h3><hr>
+      <p style="background-color: whitesmoke; padding: 50px">
+        No chats yet...
+      </p>
+    </mat-card>
+      <div *ngFor="let msg of chatList | async" class="messageContainer" style="margin-left: 15px">
+        <!--View for when not own message -->
+        <div class="messageData" *ngIf="!isOwnMsg(msg?.by?.id)">
+          <span class="sender">{{getUserNameById(msg?.by?.id)?.displayName|TakeJustName:" ":0}}</span>
+          <span class="timeStamp">
+            {{msg?.timeStamp | date:'medium'}}<br>
+            {{msg?.topic}}
+          </span>
+        </div>
+        <!--View for when own message -->
+        <div class="messageData" *ngIf="isOwnMsg(msg?.by?.id)" style="background: #000190">
+          <span class="sender isOwnSender">Me</span>
+          <span class="timeStamp isOwnTimeStamp">
+            {{msg?.timeStamp | date:'medium'}}
+          </span>
+        </div>
+        <div class="messageContent isOwnMessage" fxLayout="row">
+          <span fxFlex="90%"><p style="overflow-wrap: break-word;">{{msg?.message}}</p></span>
+          <span *ngIf="isOwnMsg(msg?.by?.id)" fxFlex>
+            <i class="material-icons" *ngIf="msg?.delivered == false">done</i>
+            <i class="material-icons" *ngIf="msg?.delivered == true && msg?.read == false">done_all</i>
+            <i class="material-icons" *ngIf="msg?.read == true" style="color: #3498DB">done_all</i>
+            <i class="material-icons" *ngIf="msg?.delivered == undefined || msg?.delivered == null">error</i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="position: fixed; bottom: 0; right: 0; width: 70%; z-index: 1000" 
+      fxLayout="row" class="input-group">
+      <textarea  fxFlex="100%" [(ngModel)]="message" placeholder="Type message here..." (keydown)="handleSubmit($event)" 
+      name="textmsg"></textarea>
+      <span class="input-group-addon" id="send">
+        <button mat-icon-button (click)="send()"><i class="material-icons">send</i></button>
+      </span> 
+    </div>
+  </div>
+</div> 
+<!--Mobile View -->
+<div class="top_margin" fxLayout="column" style="width: 100%; " fxShow.xs="true" fxShow.gt-xs="false">
+    <h5 style="padding-top: 30px; padding-bottom: 20px; color: #1F618A; text-align: center; background: white; font-size: 35px;  font-family: 'Ubuntu', sans-serif;">
+      Clickinn Chat  
+    </h5>
+    <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="loader">
+        </div>
+      </div>
+    <hr width="90%" color="#1F618A">
+    <mat-list fxFlex.xs="100%" style=" text-align: center;" *ngIf="!show">
+      <mat-list-item *ngFor="let contact of contacts">
+        <i *ngIf="contact?.status" class="material-icons" style="color: #58D68D; font-size: 10px">brightness_1</i>
+        <i *ngIf="!contact?.status" class="material-icons" style="color: lightgray; font-size: 10px">brightness_1</i>
+        <a mat-button (click)="getMessages(contact?.uid); updateCurrentContact(contact?.uid);  show = true" 
+          style="width: 100%; background: #1F618A; color: white;  font-family: 'Ubuntu', sans-serif;"> 
+          {{contact?.displayName}} 
+        </a>
+      </mat-list-item> 
+    </mat-list> 
+    <div #scroller2 fxFlex.xs="100%" fxLayout="column" *ngIf="show" style="position: fixed; top: 180px; right: 0; left: 0; bottom: 65px; overflow-y: scroll;">
+      <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="loader">
+        </div>
+      </div>
+      <a mat-mini-fab color="primary" style="position: fixed; top: 60px; right: 10px; z-index: 1000" (click)="show = false">
+        <i class="material-icons">list</i></a>
+      <div *ngFor="let msg of chatList | async" class="messageContainer" style="width: 100%" fxFlex.xs="100%">
+        <div class="messageData" *ngIf="!isOwnMsg(msg?.by?.id)">
+          <span class="sender">{{getUserNameById(msg?.by?.id)?.displayName|TakeJustName:" ":0}}</span>
+          <span class="timeStamp">
+            {{msg?.timeStamp | date:'medium'}}<br>
+            {{msg?.topic}}
+          </span>
+        </div>
+        <div class="messageData" *ngIf="isOwnMsg(msg?.by?.id)" style="background: #000050">
+          <span class="sender isOwnSender">Me</span>
+          <span class="timeStamp isOwnTimeStamp">
+            {{msg?.timeStamp | date:'medium'}}
+          </span>
+        </div>
+        <div class="messageContent isOwnMessage" fxLayout="column">
+          <span fxFlex="85%"><p style="overflow-wrap: break-word;">{{msg?.message}}</p></span>
+          <span *ngIf="isOwnMsg(msg?.by?.id)" fxFlex>
+            <i class="material-icons" *ngIf="msg?.delivered == false">done</i>
+            <i class="material-icons" *ngIf="msg?.delivered == true && msg?.read == false">done_all</i>
+            <i class="material-icons" *ngIf="msg?.read == true" style="color: #3498DB">done_all</i>
+            <i class="material-icons" *ngIf="msg?.delivered == undefined || msg?.delivered == null">error</i>
+          </span>
+        </div>
+      </div>
+      <div style="position: fixed; bottom: 0; padding: 2px; padding-bottom: 2px; width: 100%; background: white; z-index: 200000" fxLayout="row" class="input-group">
+        <textarea  fxFlex="100%" [(ngModel)]="message" placeholder="Type message here..." (keydown)="handleSubmit($event)" 
+        name="textmsg"></textarea>
+        <span class="input-group-addon" id="send">
+          <button mat-icon-button (click)="send()"><i class="material-icons">send</i></button>
+        </span> 
+      </div>
+    </div>
+</div> 
+
+

@@ -1,0 +1,130 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style="margin-top: 50px" fxShow.gt-sm="true" fxShow.lt-md="false">
+        <div fxShow.lt-lg="true" fxShow.gt-md="false">
+            <div style="padding: 20px">
+                <button mat-mini-fab color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-raised-button color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <i class="material-icons">list</i>
+                    <span>apartments</span>
+                </button>
+            </div>
+        </div>
+        <div fxShow.lt-lg="false" fxShow.gt-md="true">
+            <div style="padding: 20px">
+                <button mat-raised-button color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                    go back 
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-raised-button color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <span>View apartments &nbsp;</span>
+                    <i class="material-icons">list</i>
+                </button>
+            </div>
+        </div> 
+    </div>
+
+    <div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" 
+        fxFlexOrder="2" class="top_margin">
+                <mat-card fxFlex.gt-xs="60%">
+                    <h3 >Upload Apartments for {{prop?.street_address|TakeJustName:",":0}} <hr width="80%"></h3>
+                    <div>
+                        <a mat-button color="accent"  fxShow.lt-md="true" fxShow.gt-sm="false" 
+                        style="display: inline;"  (click)="goBack()">
+                            <i class="material-icons">arrow_back</i>
+                        </a>
+                        <a mat-button color="primary" (click)="gotoPropertyApartments(prop_id)" fxShow.lt-md="true" 
+                        fxShow.gt-sm="false" style="display: inline;" >
+                            <i class="material-icons">hotel</i>
+                        </a>
+                    </div>
+                    <p class="info-txt">
+                        Make sure this is the property you want to add to before you proceed with adding apartments.
+                    </p>
+                    <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; 
+                        transform: translate(-50%, -50%); z-index: 100">
+                        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                    </div>
+                    <section>
+                        <h5 class="subheading"> Apartment details <hr width="60%"> </h5>
+                        <p class="info-txt text-muted">This section provides potential tenants with all the information they need to know about the apartment or room</p>
+                            <mat-form-field class="input_fields"> 
+                                <mat-select placeholder="apartment/room type" [(ngModel)]="apartment['room_type']"  name="apt"  required>
+                                    <mat-option *ngFor="let room of apartment_types" [value]="room" >
+                                        {{ room }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field> 
+                            <mat-form-field class="input_fields"> 
+                                <input matInput id="irent" placeholder="Rent" type="number" inputmode="numeric" [(ngModel)]="apartment['price']" name="nrent" required max="9999999" min="1" style="text-align: right">
+                                <span matSuffix>.00</span>
+                            </mat-form-field>
+                            <mat-form-field class="input_fields">
+                                <input matInput id="ideposit" type="number" inputmode="numeric" placeholder="Deposit" [(ngModel)]="apartment['deposit']" name="ndeposit" max="9999999" min="1" style="text-align: right">
+                                <span matSuffix>.00</span>
+                            </mat-form-field>
+                            <div class="input-group full_width">
+                                <textarea rows="6" class="form-control" style="z-index:0" placeholder="Description...eg ensuite, fully-furnished(and details), great window view...etc" id="extra" [(ngModel)]="apartment['description']" name="nextra">
+                                </textarea>
+                            </div>
+                    </section>
+                    <!--images-->       
+                    <section >
+                        <h5 class="subheading"> Images<hr style="color:blue"> </h5>
+                        <p class="info-txt text-muted">
+                            Please add quality pictures that are a true reflection of your apartment.
+                        </p>
+                        <form>
+                            <h4>Display picture</h4>
+                            <p class="info-txt text-muted">Add a display image for your apartment</p>
+                            <div class="input-group full_width">
+                                <span class="input-group-addon" id="dp"><i class="material-icons">photo</i></span>
+                                <input id="images" type="file" class="form-control" (change)="dpChange($event)" accept="image/*">
+                            </div>
+                            <hr>
+                            <h4>Common pictures</h4>
+                            <p class="info-txt text-muted">
+                                Add images of the apartment/room to give the visitors a clear idea of what it looks like. 
+                            </p>
+                            <div class="input-group full_width">
+                                <span class="input-group-addon" id="ima"><i class="material-icons">photo</i></span>
+                                <input id="images" type="file" class="form-control" (change)="fileChange($event)" accept="image/*" multiple>
+                            </div>
+                        </form>
+                         <div style="text-align: right; padding-top: 30px">
+                            <button mat-raised-button color="primary" (click)="upload()">
+                                <span> Upload apartment</span>
+                                <i class="material-icons">cloud_upload</i>
+                            </button>
+                        </div>
+                    </section>
+                </mat-card>
+        <mat-card  fxFlex.gt-xs="40%" fxShow.lt.md="false">
+            <div>
+                <h5> Current apartments </h5>
+                <masonry [useImagesLoaded]="true">
+                    <masonry-brick *ngFor="let apartment of apartments" class="image_container"> 
+                        <div style="position: relative; top:0; left: 0; width:100%; height: 100%; ">
+                            <img src="{{apartment?.dP?.url}}" width="100%" height="100%">
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0, 0.1); color: whitesmoke; z-index: 1; width: 100%; height: 100%" (click)="gotoEditApartment(apartment?.apart_id)">
+                            <a mat-icon-button (click)="gotoEditApartment(apartment?.apart_id)" style="position: absolute; top: 0; right: 0">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <div style="position: absolute; bottom: 0; left: 50%;">
+                               <p> {{apartment?.room_type}}, R{{apartment?.price}}.00 </p>
+                            </div>
+                        </div> 
+                    </masonry-brick>
+                </masonry>
+            </div>
+        </mat-card>
+    </div>
+    <div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%"> 
+    </div>
+</div>

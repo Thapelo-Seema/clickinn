@@ -1,0 +1,158 @@
+	
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+	<div fxFlex="20%" fxFlexOrder="1" style="margin-top: 100px" fxShow.gt-sm="true" fxShow.lt-md="false">
+      <div class="table-responsive" fxShow.gt-md="false" fxShow.lt-lg="true">
+          <table class="table table-hover">
+            <tbody *ngIf="!editMode">
+              <tr>
+                <td style="border-top: 0px">
+                  <button mat-mini-fab color="accent" (click)="goBack()" >
+                    <i class="material-icons">arrow_back</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <div class="table-responsive" fxShow.gt-md="true" fxShow.lt-lg="false">
+          <table class="table table-hover">
+            <tbody *ngIf="!editMode">
+              <tr>
+                <td style="border-top: 0px">
+                  <button mat-raised-button color="accent" (click)="goBack()" >
+                    <i class="material-icons">arrow_back</i>
+                      <span> go back</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <p style="background-color: rgba(0,0,255,0.1); padding: 15px">{{cuser?.displayName}}</p>
+                </td>
+              </tr>
+              <tr>
+                  <td style="border-top: 0px">
+                    <p style="background-color: rgba(0,0,255,0.1); padding: 15px"> 
+                      {{cuser?.phoneNumber}}
+                    </p>
+                  </td>
+                </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <p style="background-color: rgba(0,0,255,0.1); padding: 15px">{{cuser?.email}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <button mat-raised-button color="primary" (click)="toggleEdit()">
+                    <i class="material-icons">edit</i> 
+					           <span> edit details </span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="editMode">
+              <tr>
+                <td style="border-top: 0px">
+                  <div class="input-group full_width">
+                    <span class="input-group-addon" id="namel"><i class="material-icons">&#xE851;</i></span>
+                    <input type="text" name="uname" [(ngModel)]="cuser.displayName" class="form-control" placeholder="Your name">
+                  </div> 
+                </td>
+              </tr>
+              <tr>
+                  <td style="border-top: 0px">
+                    <div class="input-group full_width">
+                      <span class="input-group-addon" id="tell"><i class="material-icons">&#xE0B0;</i></span>
+                      <input type="tel" name="ufone" [(ngModel)]="cuser.phoneNumber" class="form-control" placeholder="Your contact number">
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                    <div class="input-group full_width">
+                      <span class="input-group-addon" id="emaill"><i class="material-icons">&#xE0BE;</i></span>
+                        <input type="email" name="uemail" [(ngModel)]="cuser.email" class="form-control" placeholder="Your email address">
+                      </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-top: 0px">
+                  <button mat-raised-button color="primary" (click)="saveProfile(); toggleEdit()" >
+                    save profile
+                  </button>
+                  <button mat-raised-button  (click)="toggleEdit()">
+                      cancel
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+  </div>		  		
+  <div fxFlex="60%" fxFlex.lt-md="100%"  fxLayout="column" fxFlexOrder="2">
+    <mat-card class="heading top_margin">
+    	<h3 fxShow.gt-sm="true" fxShow.lt-md="false"> 
+        {{cuser?.displayName|TakeJustName:" ":0}} here's what people are  looking for 
+      </h3>
+      <h5 fxShow.lt-md="true" fxShow.gt-sm="false"> 
+        {{cuser?.displayName|TakeJustName:" ":0}} here's what people are  looking for 
+      </h5>
+      <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+       z-index: 100">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    	<a mat-fab color="accent">
+        30 min
+      </a>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <a mat-fab color="primary">
+        2hrs
+      </a>
+    	&nbsp;&nbsp;&nbsp;&nbsp;
+      <a mat-fab color="warn">
+        day
+      </a>
+    </mat-card>
+    <mat-card *ngIf="noLocations" style="margin-top: 5px">
+      <h3> No locations registered </h3><hr>
+      <p style="background-color: whitesmoke">
+        We currently can not show you what potential tenants are searching for, this is because you have not uploaded any properties. Please upload your properties so that you can get search feeds based on the locations of your properties.
+      </p>
+    </mat-card>
+    <mat-card *ngIf="noSearches" style="margin-top: 5px">
+      <h3> No searches in your locations </h3><hr>
+      <p style="background-color: whitesmoke">
+        No one has searched for accommodation in the locations of your properties yet. Check the search feed again a little later and you should see some searches.
+      </p>
+    </mat-card>
+    <mat-card *ngFor="let searchi of feed" style="margin-top: 5px">
+    	<mat-card-header>
+    		<div mat-card-avatar><mat-icon mat-list-icon>record_voice_over</mat-icon></div>
+    		<mat-card-title> {{searchi.searcher_name}}</mat-card-title>
+    		<mat-card-subtitle style="position: absolute; right: 15px; top: 15px; margin-bottom: 5px; font-size: 0.7em;"> 
+    			<i>{{searchi.timeStamp | date:'medium'}}</i>
+    		</mat-card-subtitle>
+    	</mat-card-header>
+    	<mat-card-content>
+    		<p class="search_text">
+    			Hi I'm looking for a <font color="turqoise">{{searchi.apartment_type}}</font> in <font color="turqoise">{{searchi.location|TakeJustName:",":0}}</font>,
+    			within the price range <font color="turqoise">R{{searchi.minPrice}}.00 - R{{searchi.maxPrice}}.00.</font>
+    			The place must prefferably be within a 10 min walk to <font color="turqoise">{{searchi.nearby|TakeJustName:",":0}}.</font> 
+    			<strong *ngIf="searchi.nsfas"><br><br>The place must be NSFAS accredited</strong> 
+    		</p>
+        <hr>   
+    	</mat-card-content>
+    	<mat-card-actions>
+        <div *ngIf="!respond">
+          <a mat-button (click)="launchDialog(searchi)">
+            <i class="material-icons">chat</i>
+            <span>respond</span>
+          </a>
+        </div>  
+    	</mat-card-actions>
+    </mat-card>
+  </div>		  
+  <div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div fxLayout="column">
+  <app-header class="fxd_hdr"></app-header>
+      <h5 fxShow.lt-sm="true" fxShow.gt-xs="false" class="sign_heading" style="font-family: Roboto">
+        We're always ready to help <font color="#48C9B0">{{cachedUser?.displayName|TakeJustName:" ":0}}!</font>
+      </h5>
+      <h5 fxShow.lt-sm="false" fxShow.gt-xs="true" fxShow.gt-md="false" class="sign_heading" style="font-size: 25px; font-family: Roboto">
+        We're always ready to help <font color="#48C9B0">{{cachedUser?.displayName|TakeJustName:" ":0}}!</font>
+      </h5>
+      <h5  fxShow.gt-md="true" fxShow.lt-lg="false" class="sign_heading" style="font-size: 45px; font-family: Roboto">
+        We're always ready to help <font color="#48C9B0">{{cachedUser?.displayName|TakeJustName:" ":0}}!</font>
+      </h5>
+    <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div class="sign_in_form">
+        <div class="input-group full_width">
+          <span class="input-group-addon" id="emaill" style="background-color: white; color: #000010"><i class="material-icons">&#xE0BE;</i></span>
+          <input class="form-control" style="z-index: 0" id="iemail" type="email" placeholder="email" [(ngModel)]="cred.email" name="nemail" #remail="ngModel" required>
+        </div> 
+        <div class="input-group full_width">
+          <span class="input-group-addon" id="pwl" style="background-color: white; color: #000010"><i class="material-icons">&#xE0DA;</i></span>
+          <input class="form-control" style="z-index: 0" id="pw" type="password" placeholder="password" [(ngModel)]="cred.password" name="npassword" #rpassword="ngModel" required>
+        </div>
+    <div class="clickables">
+      <button  mat-raised-button style="background-color: #28B463; color: white" (click)="signin()">Login</button><br><br>
+      <button class="rbutt" routerLink='/signup'>Quick registration</button><br>
+      <button class="fbutt" (click)="forgotPassword()">Forgot password</button>
+    </div>
+  </div>
+</div>
+
+        
+        
+        
+        
+    

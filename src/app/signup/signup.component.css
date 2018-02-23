@@ -1,0 +1,76 @@
+.sign_up_form{
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+    padding: 0px 0px 20px 0px; 
+}
+
+.sign_heading{
+    text-align: center; 
+    margin-top: 20px;
+    color: #1F618D;
+}
+
+#suf{
+    margin-top: 30px;
+}
+
+.pics{
+    width:100%;
+    height:auto;
+    margin-top: 5px
+}
+
+.full_width{
+    width: 90%;
+    text-align: center;
+}
+
+.head{
+    padding: 10px;
+    margin: 0 0 10px 0;
+}
+
+.butts{
+    display: block ;
+    width: 90%;
+    margin: 5px auto;
+    background: #000010;
+    color: white;
+}
+
+.fbutt{
+    margin: 10px auto;
+    color: #58D68D;
+}
+
+a{
+    display: block;
+}
+
+
+@media only screen and (min-width:768px){
+    .sign_up_form{
+        width: 40%;
+        margin: 20px auto;
+        padding-top: 20px;
+    }
+
+    .pics{
+        width:50%;
+        height:auto;
+        margin-top: 5px
+    }
+
+    .head{
+        color: white;
+        background:#fdcc52;
+        padding: 10px;
+        margin: 0 0 10px 0;
+    }
+
+    .sign_heading{
+        text-align: center; 
+        margin-top: 100px
+    }
+}

@@ -1,0 +1,11 @@
+.reply{
+    width: 90%;
+    margin: 10px auto;
+}
+
+@media only screen and (min-width:768px){
+    .reply{
+    width: 70%;
+    margin: 5px auto;
+    }
+}

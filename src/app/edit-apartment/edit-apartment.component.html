@@ -1,0 +1,226 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style="margin-top: 50px" fxShow.gt-sm="true" fxShow.lt-md="false">
+        <div style="padding: 20px">
+            <button mat-raised-button color="accent" (click)="goBack()" >
+                <i class="material-icons">arrow_back</i>
+                <span> go back</span>
+            </button>
+        </div>
+    </div>
+    <div div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" 
+        fxFlexOrder="2" class="top_margin">
+        <mat-card fxFlex.gt-xs="70%">
+            <h3>Apartment</h3>
+            <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <mat-progress-spinner mode="indeterminate" style="z-index: 100"></mat-progress-spinner>
+            </div>
+            <p class="info-txt">
+                Edit apartment details and add a tenant by switching the available state of the apartment.<br>
+                If you switch to unavailable this apartment will not be seen by clickinn visitors until the status is switched back to available.
+            </p>
+            <div style="text-align: right; margin-bottom: 5px" fxShow.gt-sm="true" fxShow.lt-md="false">
+                <button mat-raised-button color="primary" *ngIf="!editMode" (click)="toggleEdit()" >
+                    <span>edit details</span>
+                    <i class="material-icons">edit</i>
+                </button>
+                <mat-slide-toggle [checked]="apartment.available" style="margin: 20px" (change)="updateStatus($event)">
+                    Available
+                </mat-slide-toggle>
+                <button mat-raised-button color="primary" *ngIf="editMode" (click)="toggleEdit()">
+                    <i class="material-icons">arrow_back</i>
+                <span>back to slides</span>
+                </button>
+            </div>
+            <div style="text-align: right; margin-bottom: 5px" fxShow.gt-sm="false" fxShow.lt-md="true">
+                <button mat-mini-fab color="primary" *ngIf="!editMode" (click)="toggleEdit()" fxShow.gt-xs="false" fxShow.xs="true" >
+                    <i class="material-icons">edit</i>
+                </button>
+                <mat-slide-toggle [checked]="apartment.available" style="margin: 20px" (change)="updateStatus($event)">
+                    available
+                </mat-slide-toggle>
+                <button mat-mini-fab color="primary" *ngIf="!editMode" (click)="toggleEdit()" fxShow.lt-sm="false" fxShow.gt-sm="false" fxShow.sm="true">
+                    <i class="material-icons">edit</i>
+                </button>
+            </div>
+            <mat-form-field class="full_width" style="margin: 20px" *ngIf="!apartment.available">
+                <span matPrefix><i class="material-icons">person</i></span>
+                <input matInput type="text" placeholder="Who is occupying this apartment ?" [(ngModel)]="apartment.occupiedBy" name="tenant">
+            </mat-form-field>
+            <ngb-carousel *ngIf="!editMode">
+                <ng-container *ngFor="let image of images">
+                    <ng-template ngbSlide [id]="image?.name">
+                        <img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 200px" 
+                                fxShow.xs="true" fxShow.gt-xs="false">
+                            <img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 400px" 
+                                fxShow.sm="true" fxShow.gt-sm="false" fxShow.lt-sm="false">
+                            <img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 350px"
+                                fxShow.gt-sm="true" fxShow.lt-sm="false">
+                        <div class="carousel-caption" fxShow.gt-sm="true" fxShow.lt-md="false">
+                            <h2>{{apartment?.room_type}}, R{{apartment?.price}}.00</h2>
+                            <h5>{{apartment?.property.street_address|TakeJustName:",":0}}, {{apartment?.property.location|TakeJustName:",":0}}</h5>
+                        </div>
+                        <div class="carousel-caption" fxShow.gt-sm="false" fxShow.lt-md="true">
+                            <h5>{{apartment?.room_type}}, R{{apartment?.price}}.00</h5>
+                            <h6>{{apartment?.property.street_address|TakeJustName:",":0}}, {{apartment?.property.location|TakeJustName:",":0}}</h6>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </ngb-carousel>
+            <mat-card *ngIf="editMode">
+                <h4 style="margin-bottom: 40px"> Edit apartment details<hr></h4>
+                <mat-card-content>
+                    <mat-form-field class="input_fields"> 
+                        <mat-select placeholder="apartment/room type" [(ngModel)]="apartment['room_type']"  name="apt"  ngDefaultControl>
+                            <mat-option *ngFor="let room of apartment_types" [value]="room" >
+                                {{ room }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="input_fields"> 
+                        <input matInput id="irent" placeholder="Rent" type="number" inputmode="numeric" [(ngModel)]="apartment['price']" name="nrent" required max="9999999" min="1" style="text-align: right">
+                        <span matSuffix>.00</span>
+                    </mat-form-field>
+                    <mat-form-field class="input_fields">
+                        <input matInput id="ideposit" type="number" inputmode="numeric" placeholder="Deposit" [(ngModel)]="apartment['deposit']" name="ndeposit" max="9999999" min="1" style="text-align: right">
+                        <span matSuffix>.00</span>
+                    </mat-form-field>
+                    <div class="input-group full_width">
+                        <textarea  class="form-control" style="z-index:0" placeholder="Description...eg ensuite, fully-furnished(and details), great window view...etc" id="extra" [(ngModel)]="apartment['description']" name="nextra">
+                        </textarea>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <!--images-->       
+            <mat-card class="full-width cards" *ngIf="editMode">
+                <h5 class="subheading"> Images<hr style="color:blue"> </h5>
+                <p class="info-txt text-muted"> Upload images of the apartment/room. Make certain that the images are an honest and high quality description of the apartment </p>
+                <mat-card-content>
+                    <masonry [useImagesLoaded]="true" *ngIf="!open_search" >
+                        <masonry-brick *ngFor="let image of images" class="image_container">
+                          <div style="position: relative; top: 0; left:0; width: 100%; height: 100%"> 
+                            <img src="{{image.url}}" width="100%" height="100%">
+                          </div>
+                          <div style="position: absolute; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+                            <a mat-icon-button (click)="removeImage(image)" style="position: absolute;top: 0; right: 0; color: white"> 
+                              <i class="material-icons">close</i>
+                            </a>
+                          </div>
+                        </masonry-brick>
+                    </masonry>
+                    <form>
+                        <p style="margin-top: 20px">Add more pictures:</p>
+                        <div class="input-group full_width">
+                            <span class="input-group-addon" id="ima"><i class="material-icons">photo</i></span>
+                            <input id="images" type="file" class="form-control" (change)="fileChange($event)" accept="image/*" multiple>
+                        </div>
+                    </form>
+                 </mat-card-content><hr width="90%">
+                 <div style="text-align: right; padding-top: 30px">
+                    <button mat-raised-button color="primary" (click)="upload()">
+                        <span>Save Changes</span>
+                        <i class="material-icons">cloud_upload</i>
+                    </button>
+                </div>
+            </mat-card>
+        </mat-card>
+        <mat-card  fxFlex.gt-xs="30%">
+            <h5 class="subheading">Apartment details<hr></h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Available</h6>
+                                <p class="info-txt text-muted">{{apartment?.available}}</p>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!apartment.available">
+                            <td style="border-top: 0px">
+                                <h6>Occupied by</h6>
+                                <p class="info-txt text-muted">{{apartment?.occupiedBy}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Location</h6>
+                                <p class="info-txt text-muted">{{apartment?.property?.location|TakeJustName:",":0}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Apartment type</h6>
+                                <p class="info-txt text-muted">{{apartment?.room_type}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Rent</h6>
+                                <p class="info-txt text-muted">R{{apartment?.price}}.00</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Deposit</h6>
+                                <p class="info-txt text-muted">R{{apartment?.deposit}}.00</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Apartment description</h6>
+                                <p class="info-txt text-muted">{{apartment?.description}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Common areas and features</h6>
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small>{{apartment?.property?.common}}</small>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Places within 10 min walk</h6>
+            
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small *ngFor="let place of apartment?.property?.near_to">
+                                        {{place|TakeJustName:",":0}}<br>
+                                    </small>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>NSFAS accredited</h6>
+                                <p class="info-txt text-muted">{{apartment?.property?.nsfas}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has free wifi</h6>
+                                <p class="info-txt text-muted">{{apartment?.property?.wifi}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has secure parking</h6>
+                                <p class="info-txt text-muted">{{apartment?.property?.parking}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has laundry facilities</h6>
+                                <p class="info-txt text-muted">{{apartment?.property?.laundry}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-card>
+    </div>
+    <div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%"> 
+    </div>
+</div>
+
+
+            

@@ -1,0 +1,149 @@
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: whitesmoke">
+    <div fxFlex="20%" fxFlexOrder="1" style="margin-top: 50px" fxShow.gt-sm="true" fxShow.lt-md="false">
+        <div fxShow.lt-lg="true" fxShow.gt-md="false">
+            <div style="padding: 20px">
+                <button mat-mini-fab color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-mini-fab color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <i class="material-icons">list</i>
+                </button>
+            </div>
+        </div>
+        <div fxShow.lt-lg="false" fxShow.gt-md="true">
+            <div style="padding: 20px">
+                <button mat-raised-button color="accent"  (click)="goBack()">
+                    <i class="material-icons"> arrow_back </i>
+                    go back 
+                </button>
+            </div>
+            <div style="padding: 20px;">
+                <button mat-raised-button color="primary" (click)="gotoPropertyApartments(prop_id)" >
+                    <span>View apartments &nbsp;</span>
+                    <i class="material-icons">list</i>
+                </button>
+            </div>
+        </div> 
+  	</div>
+  	<div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row" fxLayout.xs="column" 
+        fxFlexOrder="2" class="top_margin">
+  		<mat-card fxFlex.gt-xs="70%">
+  			<h3>My current property</h3>
+  			<p class="info-txt">
+          You may edit the details of your property, add apartments or delete the property from your clickinn property folder
+        </p>
+        <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);z-index: 1000">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+  			<div style="text-align: right; margin-bottom: 5px" fxShow.gt-sm="true" fxShow.lt-md="false">
+          <button mat-raised-button color="primary">
+            <span>Virtual tour</span>
+            <i class="material-icons">add</i>
+          </button>
+  				<button mat-raised-button color="primary" (click)="addApartment(prop_id)">
+            <span>add apartment</span>
+            <i class="material-icons">add</i>
+          </button>
+          <button mat-raised-button color="primary" (click)="gotoPropEdit(prop_id)">
+            <span>edit details</span>
+              <i class="material-icons">edit</i>
+          </button>
+        </div>
+        <div style="text-align: right; margin-bottom: 5px" fxShow.gt-sm="false" fxShow.lt-md="true">
+          <button mat-mini-fab color="primary" (click)="addApartment(prop_id)">
+            <i class="material-icons">add</i>
+          </button>
+          <button mat-mini-fab color="primary" (click)="gotoPropEdit(prop_id)">
+            <i class="material-icons">edit</i>
+          </button>
+        </div> 
+  			<ngb-carousel>
+  				<ng-container *ngFor="let image of images">
+	  				<ng-template ngbSlide [id]="image?.name">
+	  					<img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 200px" 
+                fxShow.xs="true" fxShow.gt-xs="false">
+              <img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 400px" 
+                fxShow.sm="true" fxShow.gt-sm="false" fxShow.lt-sm="false">
+              <img src="{{image?.url}}" alt="common areas" style="width: 100%; max-height: 350px"
+                fxShow.gt-sm="true" fxShow.lt-sm="false">
+	  					<div class="carousel-caption" fxShow.lt-sm="false" fxShow.gt-xs="true">
+	  						<h2>{{prop?.street_address|TakeJustName:",":0}}, {{prop?.location|TakeJustName:",":0}}</h2>
+	  					</div>
+	  					<div class="carousel-caption" fxShow.lt-sm="true" fxShow.gt-xs="false">
+	  						<h6>{{prop?.street_address|TakeJustName:",":0}}, {{prop?.location|TakeJustName:",":0}}</h6>
+	  					</div>
+	  				</ng-template>
+  				</ng-container>
+  			</ngb-carousel>
+  		</mat-card>
+  		<mat-card  fxFlex.gt-xs="30%">
+            <h5 class="subheading">Property details<hr></h5>
+            <div class="table-responsive" style="width: 100%">
+                <table class="table table-hover">
+                    <tbody >
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Location</h6>
+                                <p class="info-txt text-muted">{{prop?.location|TakeJustName:",":0}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Street Address</h6>
+                                <p class="info-txt text-muted">{{prop?.street_address|TakeJustName:",":0}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Common areas and features</h6>
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small>{{prop?.common}}</small>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px;">
+                                <h6>Places within 10 min walk</h6>
+                                <p style="background-color: whitesmoke; text-align: left; padding: 5px">
+                                    <small *ngFor="let place of prop?.near_to">
+                                        {{place|TakeJustName:",":0}}<br>
+                                    </small>
+                                </p>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>NSFAS accredited</h6>
+                                <p class="info-txt text-muted">{{prop?.nsfas}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has free wifi</h6>
+                                <p class="info-txt text-muted">{{prop?.wifi}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has secure parking</h6>
+                                <p class="info-txt text-muted">{{prop?.parking}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 0px">
+                                <h6>Has laundry facilities</h6>
+                                <p class="info-txt text-muted">{{prop?.laundry}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-card>
+  </div>
+  	<div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">  		
+  	</div>
+  </div>
+

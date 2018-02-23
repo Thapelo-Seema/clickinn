@@ -1,0 +1,53 @@
+<div fxLayout="column">
+  <app-header class="fxd_hdr"></app-header>
+      <h5 fxShow.lt-sm="true" fxShow.gt-xs="false" class="sign_heading" style="font-family: Roboto">
+        Never deal with accommodation on your own!
+      </h5>
+      <h5 fxShow.lt-sm="false" fxShow.gt-xs="true" fxShow.gt-md="false" class="sign_heading" style="font-size: 25px; font-family: Roboto">
+        Never deal with accommodation on your own! 
+      </h5>
+      <h5  fxShow.gt-md="true" fxShow.lt-lg="false" class="sign_heading" style="font-size: 45px; font-family: Roboto">
+        Never deal with accommodation on your own!
+      </h5>
+    <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <mat-card  class="sign_up_form">
+      <button  mat-raised-button class="fbutt" style="color: #2874A6; margin-top: 10px" (click)="gotoSignUp()">I already have an account</button>
+        <div class="input-group full_width">
+            <span class="input-group-addon" style="background-color: white; color: #000010" id="namel"><i class="material-icons">&#xE851;</i></span>
+            <input class="form-control" style="z-index: 0" id="fn" type="text" placeholder="full name" [(ngModel)]="signup_obj.displayName" name="nname" #rname="ngModel" required>
+        </div>  
+        <div class="input-group full_width">
+              <span class="input-group-addon" style="background-color: white; color: #000010" id="emaill"><i class="material-icons">&#xE0BE;</i></span>
+            <input class="form-control" style="z-index: 0" id="iemail" type="email" placeholder="email" [(ngModel)]="signup_obj.email" name="nemail" #remail="ngModel" required>
+        </div>
+        <div class="input-group full_width">
+              <span class="input-group-addon" style="background-color: white; color: #000010" id="tell"><i class="material-icons">&#xE0B0;</i></span>
+            <input class="form-control" style="z-index: 0" id="iphone" type="number" placeholder="phone..." name="nphone"  required (keyup)="phoneChanged($event)">
+        </div>
+        <p *ngIf="phoneErr != ''" style="color: orange">
+          {{phoneErr}}
+        </p> 
+        <div class="input-group full_width">
+              <span class="input-group-addon" style="background-color: white; color: #000010" id="pwl"><i class="material-icons">&#xE0DA;</i></span>
+            <input class="form-control" style="z-index: 0" id="pw" type="password" placeholder="password" [(ngModel)]="signup_obj.password" name="npassword" #rpassword="ngModel" required>
+        </div>
+          <div *ngIf="pwErr" class="btn-danger">
+              {{pwErr}}
+          </div> 
+        <div class="input-group full_width">
+              <span class="input-group-addon" style="background-color: white; color: #000010" id="pwl2"><i class="material-icons">&#xE0DA;</i></span>
+            <input class="form-control" style="z-index: 0" id="pwr" type="password" placeholder="re-type..." [(ngModel)]="confirmation" name="nconf" #rconf="ngModel" required>
+        </div>
+        <div style="padding: 5px">
+          <mat-checkbox [(ngModel)]="signup_obj.is_host" color="primary" name="ishost"> 
+            I am a property manager/agent 
+          </mat-checkbox>
+        </div> 
+        <button  mat-raised-button class="butts" (click)="onSubmit()" >Sign up</button>
+    </mat-card>
+</div>
+        
+
+

@@ -1,0 +1,32 @@
+<div fxLayout="column">
+	<app-header class="fxd_hdr"></app-header>
+	<div fxShow.gt-sm="true" fxShow.lt-sm="false">
+		<div class="fixed_tab" style="margin-bottom: 5px">
+			<nav mat-tab-nav-bar fxShow.gt-xs="true" fxShow.lt-sm="false">
+				<a mat-tab-link fxFlex="25%"
+			     (click)="searchf(); activeLink = 'search_feed'"
+			     [active]="activeLink == 'search_feed'" >
+			   		Search feed
+				</a>
+				<a mat-tab-link fxFlex="25%"
+			     (click)="addprop(); activeLink = 'prop_upload'"
+			     [active]="activeLink == 'prop_upload'" >
+			   		Properties
+				</a>
+				<a mat-tab-link fxFlex="25%"
+			     (click)="bookings(); activeLink = 'bookings'"
+			     [active]="activeLink == 'bookings'" >
+			   		View bookings
+				</a>
+				<a mat-tab-link fxFlex="25%"
+			     (click)="chats(); activeLink = 'chat_list'"
+			     [active]="activeLink == 'chat_list'" >
+			   		View Chats
+				</a>
+			</nav>
+		</div>
+	</div>
+	<div class="main_disp">
+		  <router-outlet ></router-outlet>
+	</div>
+</div>

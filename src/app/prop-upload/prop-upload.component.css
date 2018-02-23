@@ -1,0 +1,49 @@
+.property_pane{
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 0 0;
+    padding: 0px 0px 20px 0px;
+    background: #f8f8f8;  
+}
+
+
+.md-input-container label{
+    color: #3366ff;
+}
+
+
+
+.cards{
+    margin-bottom: 10px;
+}
+
+
+.butts{
+    display: block ;
+    width: 90%;
+    margin: 5px auto;
+}
+
+#upb{
+    background: green;
+    color: white;  
+}
+
+a{
+    display: block;
+}
+
+@media only screen and (min-width:768px){
+    .property_pane{
+        width: 50%;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        margin: 20px auto;
+        padding-top: 30px;
+        background: #f8f8f8;
+    }
+
+    
+
+   
+}

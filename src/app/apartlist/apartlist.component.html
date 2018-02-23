@@ -1,0 +1,232 @@
+<div *ngIf="!open_search" class="top_padding" style="width: 100%; font-family: 'Ubuntu', sans-serif; background: #1F618A; color: white">
+  <div  style=" padding-top: 15px; text-align: center; ">
+    <h5 fxShow.gt-xs="true" fxShow.lt-sm="false" style="font-size: 40px; padding-bottom: 50px"> 
+      Browse and click into your new place <font color="#48C9B0">{{cuser?.displayName|TakeJustName:" ":0}}</font>  
+    </h5>
+    <h5 fxShow.lt-sm="true" fxShow.gt-xs="false" style="font-size: 30px; padding-bottom: 30px"> 
+      Browse and click into your new place <font color="#48C9B0">{{cuser?.displayName|TakeJustName:" ":0}}</font>   
+    </h5>
+    <div *ngIf="!open_search">
+        <a mat-button (click)="toggleSearch()" class="width_adjust search_margin" style=" padding: 8px; background-color: whitesmoke; color: #797D7F; ">
+          <span>Filtered search</span> <i class="material-icons">search</i>  
+        </a>
+    </div>
+    <p fxShow.gt-sm="true" fxShow.lt-md="false" style="width: 70%; margin-left: auto; margin-right: auto; padding-bottom: 30px; padding-top: 25px; font-size: 25px">Click on any of the apartments/rooms below, you can use the following features : <br> 
+      <a mat-button>Viewing <i class="material-icons">transfer_within_a_station</i> </a> | 
+      <a mat-button>Chat <i class="material-icons">message</i></a> |
+      <a mat-button>Details <i class="material-icons">visibility</i></a> | 
+      <a mat-button>Virtual tour <i class="material-icons">view_stream</i> </a>
+    </p>
+    <p fxShow.lt-md="true" fxShow.gt-sm="false" style="margin-left: auto; margin-right: auto; padding-top: 20px"> <font style="font-size: 25px">Discover the following features</font> <br><a mat-button> Viewings <i class="material-icons">transfer_within_a_station</i> </a> | <a mat-button>Chats  <i class="material-icons">message</i></a> | <a mat-button>Details  <i class="material-icons">visibility</i></a> | <a mat-button>Virtual tours <i class="material-icons">view_stream</i></a> 
+    </p>
+    <!--<hr width="97%"> -->
+  </div>
+</div>
+
+<div fxLayout="row" fxLayout.lt-sm="column" style="background: white"> 
+
+  <div  fxFlex="20%" fxShow.gt-sm="true" fxShow.lt-md="false">
+    <!-- <div class="table-responsive" class="top_margin" fxShow.gt-md="true" fxShow.lt-lg="false">
+      <table class="table table-hover">
+        <tbody *ngIf="!editMode">
+          <tr>
+            <td style="border-top: 0px">
+              <p style="background-color: #1F618D; color: white; padding: 15px">{{cuser?.displayName}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="border-top: 0px">
+              <p style="background-color: #1F618D; color: white; padding: 15px"> 
+                {{cuser?.phoneNumber}}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="border-top: 0px">
+              <p style="background-color: #1F618D; color: white; padding: 15px">{{cuser?.email}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="border-top: 0px">
+              <button mat-button style="color: #1F618D" (click)="toggleEdit()">
+                <i class="material-icons">edit</i>
+                <span> edit details </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="editMode">
+          <tr>
+            <td style="border-top: 0px">
+              <div class="input-group full_width">
+                <span class="input-group-addon" id="namel"><i class="material-icons">&#xE851;</i></span>
+                <input type="text" name="uname" [(ngModel)]="cuser.displayName" class="form-control" placeholder="Your name">
+              </div> 
+            </td>
+          </tr>
+          <tr>
+              <td style="border-top: 0px">
+                <div class="input-group full_width">
+                  <span class="input-group-addon" id="tell"><i class="material-icons">&#xE0B0;</i></span>
+                  <input type="tel" name="ufone" [(ngModel)]="cuser.phoneNumber" class="form-control" placeholder="Your contact number" maxlength="10">
+                </div>
+              </td>
+          </tr>
+          <tr>
+            <td style="border-top: 0px">
+                <div class="input-group full_width">
+                  <span class="input-group-addon" id="emaill"><i class="material-icons">&#xE0BE;</i></span>
+                    <input type="email" name="uemail" [(ngModel)]="cuser.email" class="form-control" placeholder="Your email address">
+                  </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="border-top: 0px">
+              <button mat-raised-button color="primary" (click)="saveProfile(); toggleEdit()" >
+                save profile
+              </button>
+              <button mat-raised-button  (click)="toggleEdit()" >
+                  cancel
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+  </div>
+  <div fxFlex="60%" fxFlex.lt-md="100%"  fxLayout="column" class="top_margin" style="padding: 0px; width: 100%; font-family: 'Ubuntu', sans-serif;">
+    
+<!--____________________________________________________________________________________________________________________-->
+    <div style="margin-top: 15px; margin-bottom: 30px; font-family: 'Roboto', sans-serif; font-size: 25px" *ngIf="open_search">
+      
+<!--____________________________________________________________________________________________________________________-->
+      <div >
+          <a mat-raised-button  (click)="toggleSearch()" style="padding: 8px; width: 80%">
+            <span>close filter &nbsp;&nbsp;&nbsp;</span>
+            <i class="material-icons">close</i>
+          </a>
+      </div>
+    </div>
+<!--____________________________________________________________________________________________________________________-->
+    <div *ngIf="open_search">
+      <form #filterForm='ngForm' (ngSubmit)="onSearch(); toggleSearch()" style="margin-bottom: 30px; width:100%" fxLayout="column"> 
+        <h4 class="subheading">Filter accommodation results</h4>
+        <p class="info-txt"> 
+          Apply the filters that represent exactly the place you are looking for.
+        </p>
+        <div style="text-align: center;" fxLayout.xs="column" fxLayout.gt-xs="row">
+          <div fxFlex.xs="90%" fxFlex.gt-xs="48%" style="margin: 15px 5px;">
+            <mat-form-field style=" width: 90%" > 
+              <span matPrefix><i class="material-icons">&#xE567;</i></span>
+              <input matInput type='text' id="locs" [(ngModel)]="search_obj.location" placeholder="location" name="loc" autocorrect="off" autocapitalize="off" spellcheck="off" [matAutocomplete]="autoLoc" [formControl]="locCtrl"/>
+              <mat-hint align="start"><strong>eg. Melville or Brixton</strong></mat-hint>
+              <mat-autocomplete #autoLoc="matAutocomplete">
+                <mat-option *ngFor="let option of locations" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field> 
+          </div>
+          <div fxFlex.xs="90%" fxFlex.gt-xs="48%" style="margin: 15px 5px;">
+            <mat-form-field style="width: 90%" > 
+              <span matPrefix><i class="material-icons">&#xE536;</i></span>
+              <input matInput type='text' id="nby" [matAutocomplete]="autoNby" [formControl]="placeCtrl" [(ngModel)]="search_obj.nearby" placeholder="10 min walk to?"  name="nearby" autocorrect="off" autocapitalize="off" spellcheck="off"/>
+              <mat-hint align="start"><strong>a place you want live near</strong></mat-hint>
+              <mat-autocomplete #autoNby="matAutocomplete">
+                <mat-option *ngFor="let option of nearbys" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="text-align: center;" fxLayout.xs="column" fxLayout.gt-xs="row">
+          <div fxFlex.xs="90%" fxFlex.gt-xs="48%" style="margin: 15px 5px;">
+            <mat-form-field style="width: 90%"> 
+                <input matInput id="irent" placeholder="Minimum price" type="number" inputmode="numeric" [(ngModel)]="search_obj.minPrice" name="min" required max="9999999" min="1" style="text-align: right">
+                <span matSuffix>.00</span>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xs="90%" fxFlex.gt-xs="48%" style="margin: 15px 5px;">
+            <mat-form-field style="width: 90%"> 
+                <input matInput id="irent" placeholder="Maximum price" type="number" inputmode="numeric" [(ngModel)]="search_obj.maxPrice" name="max" required max="9999999" min="1" style="text-align: right">
+                <span matSuffix>.00</span>
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <mat-form-field style="margin: 15px 0px 15px 0px;  width: 90%">
+          <mat-select placeholder="apartment/room type" [(ngModel)]="search_obj.apartment_type" name="aptmt" >
+            <mat-option *ngFor="let room of apartment_types" [value]="room" >
+                  {{ room }}
+            </mat-option>
+          </mat-select> 
+          </mat-form-field>
+        </div>
+        <div style="text-align: left; padding-left: 15px">
+          <mat-checkbox color="primary" style="margin: 15px 0px 15px 0px"  name="parking">  
+            Parking required
+          </mat-checkbox>&nbsp;&nbsp;&nbsp; 
+          <mat-checkbox color="primary" style="margin: 15px 0px 15px 0px" [(ngModel)]="search_obj.nsfas" name="nsfas">  
+            NSFAS accredited(if student)
+          </mat-checkbox> 
+        </div>
+        <div style="text-align: center;margin: 20px 0px 30px 0px">
+          <button type="submit" mat-raised-button color="primary" style="margin: 10px 0px 40px 0px">
+            <span>Apply filters</span>
+            <i class="material-icons">search</i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100">
+      <div class="loader">
+      </div>
+    </div>
+<!--___________________________________________________________________________________________________________________-->
+    <div *ngIf="!open_search">
+<!--________________________________________________________________________________________________________________--> 
+      <masonry [useImagesLoaded]="true" fxLayout="row" fxShow.gt-xs="true" fxShow.xs="false">
+        <masonry-brick *ngFor="let res of homeResults" fxFlex.gt-xs="48%" style="width: 100%; max-height: 300px; margin: 5px;">
+          <img src="{{res?.dP?.url}}" width="100%" height="100%">
+          <div style="position: absolute; width: 100%; height: 100%; top: 0; right: 0; bottom: 0; left: 0;
+            background: rgba(0,0,0, 0.1); color: whitesmoke; z-index: 1" (click)="gotoApartmentDetails(res.apart_id)">
+            <p style="position: absolute; top: 10px; left: 50%"> 
+              {{res?.property.location|TakeJustName:",":0}}, {{res?.room_type}}, R{{res?.price}}.00
+            </p>
+            <a mat-button (click)="gotoApartmentDetails(res.apart_id)" style="position: absolute; bottom: 10px; left: 0; color: white">
+              <span>Details&nbsp;&nbsp;&nbsp;</span><i class="material-icons">visibility</i>
+            </a>
+            <a mat-button style="position: absolute; bottom: 10px; right: 10px; color: white" (click)="virtualTour()" >
+              <span>Virtual tour &nbsp;&nbsp;&nbsp;</span>
+              <i class="material-icons">view_stream</i>
+            </a>
+          </div>
+        </masonry-brick>
+      </masonry>
+      <masonry [useImagesLoaded]="true" fxLayout="column" fxShow.gt-xs="false" fxShow.xs="true">
+        <masonry-brick *ngFor="let res of homeResults" class="image_container">
+          <div style="position: relative; top:0; left: 0; width:100%; height: 100%; ">
+            <img src="{{res?.dP?.url}}" width="100%" height="100%">
+          </div>
+          <div style="position: absolute; top: 0; left: 0; background: rgba(0,0,0, 0.1); color: whitesmoke; z-index: 1; width: 100%; height: 100%" (click)="gotoApartmentDetails(res.apart_id)">
+            <p style="position: absolute; top: 10px; left: 50%"> 
+              {{res?.property.location|TakeJustName:",":0}}, {{res?.room_type}}, R{{res?.price}}.00
+            </p>
+            <a mat-button (click)="gotoApartmentDetails(res.apart_id)" style="position: absolute; bottom: 10px; left: 0; color: white">
+              <span>details&nbsp;&nbsp;&nbsp;</span><i class="material-icons">visibility</i>
+            </a>
+            <a mat-button style="position: absolute; bottom: 10px; right: 10px; color: white" (click)="virtualTour()">
+              <span>virtual tour&nbsp;&nbsp;&nbsp;</span>
+              <i class="material-icons">view_stream</i>
+            </a>
+          </div>
+        </masonry-brick>
+      </masonry>
+    </div>
+  </div>
+  <div fxFlex="20%" fxShow.gt-sm="true" fxShow.lt-md="false">
+  </div>
+</div>
+
+  

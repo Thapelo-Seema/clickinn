@@ -1,0 +1,177 @@
+<mat-toolbar class="header" >
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <span class="branding">
+        <a href="#page-top" style="font-size:40px; font-family: 'Roboto', sans-serif;" >
+            clickinn
+        </a>
+    </span>
+    <span class="spacer"> </span>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+    <a mat-icon-button  [matMenuTriggerFor]="menu" class="menu"> 
+        <i class="material-icons md-light">&#xE5D2;</i>
+    </a>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+    <!--If not logged in -->
+    <div *ngIf="unlogged">
+        <a mat-menu-item (click)="login()">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE8AC;</i>&nbsp;&nbsp;
+                <span> 
+                    login
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="signup()">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE853;</i>&nbsp;&nbsp; 
+                <span> 
+                    sign up
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item>
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE884;</i>&nbsp;&nbsp; 
+                <span> 
+                    get app
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="gotoAbout()">
+            <button mat-button color="primary">
+                <i class="material-icons">people</i>&nbsp;&nbsp;
+                <span> 
+                    About us (clickinn team)
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="gotoInvestors()">
+            <button mat-button color="primary">
+                <i class="material-icons">monetization_on</i>&nbsp;&nbsp;
+                <span> 
+                    Investor enquiry
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="gotoHelp()">
+            <button mat-button color="primary">
+                <i class="material-icons">help</i>&nbsp;&nbsp; 
+                <span> 
+                    help
+                </span>
+            </button>
+        </a>
+    </div>
+    <!--If a tenant user is logged in -->
+    <div *ngIf="logged_t">
+        <a mat-menu-item (click)="supportUser()">
+            <button mat-button color="primary">
+                <i class="material-icons">people</i>&nbsp;&nbsp;
+                <span> 
+                   clickinn support
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="accom()">
+            <button mat-button color="primary">
+                <i class="material-icons">home</i>&nbsp;&nbsp;
+                <span> 
+                    Apartments 
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="userChats()">
+            <button mat-button color="primary">
+                <i class="material-icons">chat</i>&nbsp;&nbsp; 
+                <span> 
+                    Chats
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="gotoUser(currentUser?.uid)">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE853;</i>&nbsp;&nbsp;
+                <span> 
+                    Profile
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="logout()">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE8C6;</i>&nbsp;&nbsp; 
+                <span> 
+                    Logout
+                </span>
+            </button>
+        </a>
+    </div>
+    <!--If a host user is logged in -->
+    <div *ngIf="logged_l">
+        <a mat-menu-item (click)="supportHost()">
+            <button mat-button color="primary">
+                <i class="material-icons">people</i>&nbsp;&nbsp;
+                <span> 
+                   clickinn support
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="hostChats()">
+            <button mat-button color="primary">
+                <i class="material-icons">chat</i>&nbsp;&nbsp;
+                <span> 
+                    Chats
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="searchf()">
+            <button mat-button color="primary">
+                <i class="material-icons">cast</i>&nbsp;&nbsp; 
+                <span> 
+                    Searches
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="addprop()">
+            <button mat-button color="primary">
+                <i class="material-icons">home</i>&nbsp;&nbsp; 
+                <span> 
+                    Manage properties 
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="viewp()">
+            <button mat-button color="primary">
+                <i class="material-icons">location_city</i>&nbsp;&nbsp; 
+                <span> 
+                    Property list
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="bookings()"> 
+            <button mat-button color="primary">
+                <i class="material-icons">list</i>&nbsp;&nbsp; 
+                <span> 
+                    Viewing bookings
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="gotoHostUser(currentUser?.uid)">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE853;</i>&nbsp;&nbsp; 
+                <span class="item_text" > 
+                    Profile
+                </span>
+            </button>
+        </a>
+        <a mat-menu-item (click)="logout()">
+            <button mat-button color="primary">
+                <i class="material-icons">&#xE8C6;</i>&nbsp;&nbsp; 
+                <span> 
+                    logout
+                </span>
+            </button>
+        </a>
+    </div>
+</mat-menu>

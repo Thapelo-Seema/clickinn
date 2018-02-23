@@ -1,0 +1,18 @@
+<div style="position: fixed; top: 0; left: 0; bottom: 0; width: 100%; background: #000020; color: white">
+ 	<div class="greeting_card">
+ 		<h4 style="text-align: center; padding: 7px"> 
+ 			Welcome to clickinn, please tell us a bit about yourself before we proceed...
+ 		</h4>
+		<div class="input-group" style="text-align: center; padding: 7px">
+	  		<input id="uname" [(ngModel)]="name" type="text" class="form-control" placeholder="Your name..." name="usrname">
+	  	</div>
+  		<div style="padding:0; padding-top: 20px; text-align: center; margin-left: auto; margin-right: auto;">
+	  		<a mat-button  (click)="isHost()" style="margin: 10px; background: transparent; border: 1px solid white; padding: 10px;"> 
+	  			I'm a property manager/agent 
+	  		</a>  
+	  		<a mat-button (click)="isNormalUser()" style="margin: 10px; background: transparent; border: 1px solid white; padding: 10px;"> 
+	  			I'm just looking for accommodation 
+	  		</a>
+		</div>
+	</div>   
+</div>

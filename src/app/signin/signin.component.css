@@ -1,0 +1,80 @@
+.sign_in_form{
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+    padding: 0px 0px 20px 0px;  
+}
+
+.sign_heading{
+    text-align: center; 
+    margin-top: 20px
+}
+
+.full_width{
+    width: 90%;
+    text-align: center;
+}
+
+.pri{
+    background-color: #337ab7;
+    color: white;
+}
+
+.google{
+    background-color: red;
+    color: white;
+}
+
+.butts{
+    display: block ;
+    width: 90%;
+    margin: 5px auto;
+}
+
+#sif{
+    margin-top: 30px;
+}
+
+#sib{
+    background: #4CAF50;
+    color: white;
+}
+
+.fbutt{
+    display: block ;
+    background: transparent;
+    margin: 10px auto;
+    border: none;
+    color: orange;
+    border-bottom: 1px solid orange; 
+}
+
+.rbutt{
+    display: block ;
+    background: transparent;
+    margin: 10px auto;
+    border: none;
+    color: #2E86C1;
+    border-bottom: 1px solid #2E86C1; 
+}
+
+a{
+    display: block;
+}
+
+
+@media only screen and (min-width:768px){
+
+    .sign_in_form{
+        padding-top: 20px;
+        width: 40%;
+        margin: 20px auto;
+    }
+
+
+    .sign_heading{
+    text-align: center; 
+    margin-top: 100px
+    }
+
+}

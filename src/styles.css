@@ -1,0 +1,336 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.material-icons.md-light { color: rgba(255, 255, 255, 1);}
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3);}
+
+html, body{
+	margin: 0px;
+	padding: 0px;
+  font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
+  color: #808080;	
+}
+.loader {
+      border: 5px solid #f3f3f3; /* Light grey */
+      border-top: 5px solid #000030; /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 1.2s linear infinite;
+      z-index: 1000;
+      background: transparent;
+    }
+
+  .search_margin{
+    margin-bottom: 25px;
+  }
+
+  .top_alt{
+    position: fixed;
+    top: 150px;
+  }
+.main_c{
+    margin-top: 56px;
+    z-index: 0;
+}
+.input_fields{
+    width:100%;
+}
+nav a{
+	text-decoration: none;
+}
+nav a :hover{
+	text-decoration: none;
+}
+nav a :active {
+	text-decoration: none;
+}
+.image_container{
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0, 0.14);
+  overflow: hidden;
+}
+.slide_container{
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0, 0.14);
+  overflow: hidden;
+}
+.slide_image{
+  width: 100%;
+  max-height: 200px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0, 0.14);
+  overflow: hidden;
+}
+.fixed_tab{
+  position: fixed;
+  top: 57px;
+  width: 100%;
+  background: white;
+  z-index: 10;
+}
+.fxd_hdr{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.heading{
+  margin-top: 10px ;
+  margin-bottom: 5px;
+	background: white;
+  padding-top: 15px ;
+	padding-bottom: 15px;
+  font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
+}
+.search_text{
+	font-size: 15px;
+}
+.subheading{
+  margin-top: 20px; 
+  color: blue; 
+    
+}
+.info-txt{
+  font-size: 13px;
+  padding: 15px;
+  background-color: #1F618A;
+  color: white;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.info2-txt{
+  font-size: 13px;
+  padding: 15px;
+  background-color: white;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.main_disp{
+  width: 100%;
+  text-align: center;
+  margin: 0px;
+  margin-bottom: 55.99px;
+  padding: 0px;   
+}
+.full_width{
+  width: 90%;
+  margin: 10px auto;
+  text-align: center;
+}
+.full-width{
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
+}
+.head{
+  padding: 10px;
+  margin: 0 0 10px 0;
+}
+.pri{
+  background-color: #337ab7;
+  color: white;
+}
+.full_butts{
+  display: block ;
+  width: 90%;
+  margin: 5px auto;
+}
+.message{
+	display: block;
+	height: auto;
+}
+.app-chats{
+	display: flex;
+	flex-direction: column;
+}
+.chat-form{
+	width: 100%;
+	display: flex;
+	white-space: nowrap;
+	overflow: none;
+}
+.mobile_menu{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: #000010;
+}
+header {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  overflow-y: hidden;
+  background:  #000010;
+  /* fallback for old browsers */
+  background: #000010;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: #000010;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+}
+header .header-content{
+  text-align: center;
+  padding: 100px 0 50px;
+  position: relative;
+}
+header .header-content .header-content-inner{
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+header .header-content .header-content-inner h1{
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+header .header-content .header-content-inner .list-badges{
+  margin-bottom: 25px;
+}
+header .header-content .header-content-inner .list-badges img{
+  height: 50px;
+  margin-bottom: 25px;
+}
+header .device-container{
+  max-width: 300px;
+  margin: 0 auto 100px;
+}
+header .device-container .screen img{
+  border-radius: 3px;
+}
+@media (min-width: 768px){
+  header{
+    min-height: 100%;
+  }
+  header .header-content{
+    text-align: left;
+    padding: 0;
+    height: 100vh;
+  }
+  header .header-content .header-content-inner{
+    max-width: none;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+  }
+  header .header-content .header-content-inner h1{
+    font-size: 35px;
+  }
+  header .device-container{
+    max-width: none;
+    max-height: calc(0vh);
+    margin: 80px auto 0;
+  }
+}
+@media (min-width: 992px){
+  header .header-content .header-content-inner h1{
+    font-size: 50px;
+  }  
+}
+@media (min-width: 599px){
+  .booking_card{
+    width: 50%;
+  }
+  .greeting_card{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+  } 
+
+  .top_padding{
+    padding-top: 90px;
+  }
+}
+.btn-outline{
+  color: white;
+  border: 1px solid white;
+}
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active,
+.btn-outline.active{
+  color: white;
+  background-color: #fdcc52;
+  border-color: #fdcc52;
+}
+.btn{
+  font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
+  letter-spacing: 2px;
+  border-radius: 10px;
+}
+.btn-xl{
+  padding: 15px 45px;
+  font-size: 11px;
+}
+
+@media only screen and (min-width: 1017px){
+  .top_alt{
+    position: fixed;
+    top: 100px;
+  }
+}
+
+@media only screen and (min-width: 600px){
+  .top_margin{
+    margin-top: 70px;
+  }
+
+  .top_padding{
+    padding-top: 90px;
+  }
+
+  .top_pad{
+    padding-top: 30px;
+  }
+
+  .width_adjust{
+    width: 30%;
+  }
+
+  .search_margin{
+    margin-bottom: 70px;
+  }
+
+  .pic_pane{
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    bottom: 0; 
+    overflow-y: scroll; 
+  }
+  .content_pane{
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    bottom: 0; 
+    overflow-y: scroll; 
+  }
+}
+a{
+  text-decoration: none;
+}
+a:visited{
+  text-decoration: none;
+}
+.greeting_card{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} 
+
+

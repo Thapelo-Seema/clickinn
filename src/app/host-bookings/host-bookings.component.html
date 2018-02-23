@@ -1,0 +1,128 @@
+<div fxLayout="row" fxLayout.lt-sm="column">
+    <div fxFlex="20%" fxFlexOrder="1" style="margin-top: 100px" fxShow.gt-sm="true" fxShow.lt-md="false">
+		<div style="padding: 20px">
+            <button mat-raised-button color="accent" (click)="goBack()" >
+            	<i class="material-icons">arrow_back</i>
+                <span> go back</span>
+            </button>
+        </div>
+	</div>
+	<mat-card fxFlex="60%" fxFlex.lt-md="100%" fxLayout="column" fxFlexOrder="2" class="top_margin">
+		<div class="heading">
+			<h3> Your bookings </h3>
+			<a mat-fab color="accent">30 min</a>&nbsp;&nbsp;&nbsp;&nbsp;<a mat-fab color="primary">
+				2hrs
+			</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a mat-fab color="warn">day</a>
+			<div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100">
+                <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+            </div>
+			<div class="table-responsive" style="margin-top: 30px" fxShow.xs="true" fxShow.gt-xs="false">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>
+								<small><i>Property</i></small>
+							</th>							
+							<th>
+								<small><i>Date</i></small>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let viewing of viewings" (click)="gotoBooking(viewing?.$key)" 
+						style="text-align: left" [ngStyle]="{'background-color':viewing?.confirmed === true ? 'rgba(0,255,0, 0.2)' : 'white' }">
+							<td >
+								<small>
+									{{getProperty(viewing?.prop_id)?.street_address|TakeJustName:",":0}}
+								</small>
+							</td>
+							<td >
+								<small>
+									{{viewing?.date}}
+								</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="table-responsive" style="margin-top: 30px" fxShow.lt-sm="false" fxShow.gt-xs="true" fxShow.gt-md="false">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>
+								<small><i>Property</i></small>
+							</th>
+							<th>
+								<small><i>Apartment</i></small>
+							</th>
+							<th>
+								<small><i>Date</i></small>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let viewing of viewings" (click)="gotoBooking(viewing?.$key)" 
+						style="text-align: left" [ngStyle]="{'background-color':viewing?.confirmed === true ? 'rgba(0,255,0, 0.2)' : 'white' }">
+							<td>
+								<small>
+									{{getProperty(viewing?.prop_id)?.street_address|TakeJustName:",":0}}
+								</small>
+							</td>
+							<td>
+								<small>
+									{{getApartment(viewing?.apart_id)?.room_type}}
+								</small>
+							</td>
+							<td >
+								<small>{{viewing?.date}}</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="table-responsive" style="margin-top: 30px" fxShow.lt-lg="false" fxShow.gt-md="true">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>
+								<small><i>Property</i></small>
+							</th>
+							<th>
+								<small><i>Apartment</i></small>
+							</th>
+							<th>
+								<small><i>Booker</i></small>
+							</th>
+							<th>
+								<small><i>Date</i></small>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let viewing of viewings" (click)="gotoBooking(viewing?.$key)" style="text-align: left" 
+						 [ngStyle]="{'background-color':viewing?.confirmed === true ? 'rgba(0,255,0, 0.2)' : 'white' }">
+							<td>
+								<small>
+									{{getProperty(viewing?.prop_id)?.street_address|TakeJustName:",":0}}
+								</small>
+							</td>
+							<td>
+								<small>{{getApartment(viewing?.apart_id)?.room_type}}</small>
+							</td>
+							<td>
+								<small>{{getUserNameById(viewing?.booker_id)?.displayName|TakeJustName:" ":0}}</small>
+							</td>
+							<td>
+								<small>{{viewing?.date}}</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		</mat-card>
+	
+	<div fxShow.gt-sm="true" fxShow.lt-md="false" fxFlexOrder="3" fxFlex="20%">
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<mat-card class="top_margin booking_card" style="margin-left: auto; margin-right: auto;">
+	<h3>Booking details<hr></h3>
+	<div *ngIf="showSpinner" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+	<table style="text-align: left; margin-left: auto; margin-right: auto" 
+	fxShow.xs="false" fxShow.gt-xs="true">
+		<tr>
+			<td>
+				<h6>This booking was done at:</h6>
+			</td>
+			<td>
+				{{booking?.timeStamp|date:'medium'}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>For the property:</h6>
+			</td>
+			<td>
+				{{property?.street_address|TakeJustName:",":0}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>Apartment:</h6>
+			</td>
+			<td>
+				{{apartment?.room_type}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>Done by:</h6>
+			</td>
+			<td>
+				{{booker?.displayName|TakeJustName:" ":0}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>For the date:</h6>
+			</td>
+			<td>
+				{{booking?.date}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>Viewing time:</h6>
+			</td>
+			<td>
+				{{booking?.time}}
+			</td>
+		</tr>
+	</table>
+	<table style="text-align: center; width: 100%" fxShow.xs="true" fxShow.gt-xs="false">
+		<tr>
+			<td>
+				This booking was done at 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{booking?.timeStamp | date:'medium'}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				For the property
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{property?.street_address|TakeJustName:",":0}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Apartment
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{apartment?.room_type}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Done by
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{booker?.displayName|TakeJustName:" ":0}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				For the date
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{booking?.date}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Viewing time
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="info-txt">{{booking?.time}}</p>
+			</td>
+		</tr>
+	</table>
+	<mat-card-actions>
+		<button *ngIf="!booking?.confirmed" mat-raised-button style="margin: 10px; color: white; background: green" (click)="accept()"> 
+			<span>accept booking</span> &nbsp;&nbsp;
+			<i class="material-icons">done</i>
+		</button>
+		<button *ngIf="booking?.confirmed" mat-raised-button style="margin: 10px; color: white; background: #9CBA7F"> 
+			<span>booking accepted</span> &nbsp;&nbsp;
+			<i class="material-icons">done_all</i>
+		</button>
+		<button mat-raised-button color="accent" *ngIf="!declined" style="margin: 10px" (click)="decline()"> 
+			<span>decline booking</span> &nbsp;&nbsp;
+			<i class="material-icons">close</i>
+		</button>
+	</mat-card-actions>
+</mat-card>
+

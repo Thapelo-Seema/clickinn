@@ -1,0 +1,43 @@
+.property_pane{
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0px 0px 20px 0px; 
+   
+}
+
+
+
+.cards{
+    margin-bottom: 10px;
+}
+
+.head{
+    color: white;
+    background:#000040;
+    padding: 10px;
+    margin: 0;
+}
+
+.butts{
+    display: block ;
+    width: 90%;
+    margin: 5px auto;
+}
+
+#upb{
+    background: green;
+    color: white;  
+}
+
+
+a{
+    display: block;
+}
+
+@media only screen and (min-width:768px){
+    .property_pane{
+    width: 50%;
+    margin: 5px auto;
+    }
+}
